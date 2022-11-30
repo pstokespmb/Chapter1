@@ -19,9 +19,8 @@ for sample in Arikara Hidatsa Mandan1_PPN046;
     do singularity exec -B /global/scratch/users/peter_stokes /global/scratch/users/peter_stokes/smcpp_latest.sif \
     smc++ vcf2smc \
     --cores 4 \
-    --mask /global/scratch/users/peter_stokes/Chapter1/masks_for_smcpp/PS_Chapter1_mask_Chr01_FINAL.bed.gz \
     -d ${sample} ${sample} \
-    /global/scratch/users/peter_stokes/Chapter1/VCF_for_smcpp/PS_Chapter1_biallelicSNPS_G4_hardFilteredInvariants_Chr01_sorted.vcf.gz \
+    /global/scratch/users/peter_stokes/Chapter1/VCF_for_smcpp/PS_Chapter1_biallelicSNPS_G4_Chr01.vcf.gz \
     /global/scratch/users/peter_stokes/Chapter1/smcpp/vcf2smc_output/LRE_${sample}_Chr01_test.smc.gz \
     HanXRQChr01 \
     LRE_test:Anzac_Pueblo,Ari_Broad,Ari_Man,Arikara,Arikara_122976,Arikara_126306,Arikara_14042_874,Havasupai,Hidatsa,Hopi_dye_NEW,Hopi_mapping_NEW,Hopi_real_NEW,Laguna_Pueblo,Mandan1_PPN046,Mandan2,Paiute,Se_Purp,Se_Strip_682a,Se_Strip_682b,Seneca,Seneca_137749,Zuni,MexCult1,MexCult15,MexCult3,MexCult6,MexCult9;
