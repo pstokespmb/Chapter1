@@ -1,12 +1,12 @@
 #!/bin/bash 
 #SBATCH -D /global/scratch/users/peter_stokes/Chapter1/VCF_for_smcpp
 #SBATCH -J vcfMissingFixer_Chr17
-#SBATCH --account=co_rosalind
+#SBATCH --account=ac_acblackman
 #SBATCH --partition=savio2_htc
-#SBATCH --qos=rosalind_htc2_normal
+#SBATCH --qos=savio_normal
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=6
-#SBATCH --time=400:00:00
+#SBATCH --time=72:00:00
 #SBATCH --mem=64000
 #SBATCH -o /global/scratch/users/peter_stokes/err_outs/vcfMissingFixer_Chr17.out
 #SBATCH -e /global/scratch/users/peter_stokes/err_outs/vcfMissingFixer_Chr17.err
