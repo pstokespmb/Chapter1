@@ -1,6 +1,6 @@
 #!/bin/bash 
 #SBATCH -D /global/scratch/users/peter_stokes/Chapter1/VCF_for_smcpp
-#SBATCH -J bedMaker_Chr01
+#SBATCH -J vcfMissingFixer_Chr01
 #SBATCH --account=co_rosalind
 #SBATCH --partition=savio2_htc
 #SBATCH --qos=rosalind_htc2_normal
@@ -8,8 +8,8 @@
 #SBATCH --cpus-per-task=6
 #SBATCH --time=400:00:00
 #SBATCH --mem=64000
-#SBATCH -o /global/scratch/users/peter_stokes/err_outs/bedMaker_Chr01.out
-#SBATCH -e /global/scratch/users/peter_stokes/err_outs/bedMaker_Chr01.err
+#SBATCH -o /global/scratch/users/peter_stokes/err_outs/vcfMissingFixer_Chr01.out
+#SBATCH -e /global/scratch/users/peter_stokes/err_outs/vcfMissingFixer_Chr01.err
 #SBATCH --mail-user=peter_stokes@berkeley.edu
 #SBATCH --mail-type=All
 
@@ -50,7 +50,7 @@ python3 missingFinder.py HanXRQChr01 PS_Chapter1_biallelicSNPS_G4_hardFilteredIn
 
 cat VCF_header_missingData.vcf PS_Chapter1_biallelicSNPS_G4_hardFilteredInvariants_Chr01_sorted_missingPositions.vcf > PS_Chapter1_biallelicSNPS_G4_hardFilteredInvariants_Chr01_sorted_missingPositions_headerFixed.vcf
 
-bizip PS_Chapter1_biallelicSNPS_G4_hardFilteredInvariants_Chr01_sorted_missingPositions_headerFixed.vcf
+bgzip PS_Chapter1_biallelicSNPS_G4_hardFilteredInvariants_Chr01_sorted_missingPositions_headerFixed.vcf
 
 tabix -p vcf PS_Chapter1_biallelicSNPS_G4_hardFilteredInvariants_Chr01_sorted_missingPositions_headerFixed.vcf.gz
 
