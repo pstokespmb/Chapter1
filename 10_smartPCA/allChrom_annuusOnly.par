@@ -1,0 +1,7 @@
+genotypename: 	angsd_includeMEX_includeAncients_annuusONLY_allChrom_smartPCA.geno
+snpname:      	angsd_includeMEX_includeAncients_annuusONLY_allChrom_smartPCA.snp
+indivname:    	allChrom_annuusOnly.ind
+evecoutname:  	allChrom_annuusOnly.eigenvector
+evaloutname:  	allChrom_annuusOnly.eigenvalues
+poplistname:  	PopList_annuusOnly_ancientProj.pop
+lsqproject:		YES
