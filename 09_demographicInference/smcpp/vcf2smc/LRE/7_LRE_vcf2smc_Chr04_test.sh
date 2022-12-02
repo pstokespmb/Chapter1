@@ -1,15 +1,15 @@
 #!/bin/bash 
 #SBATCH -D /global/scratch/users/peter_stokes/Chapter1/VCF_for_smcpp
-#SBATCH -J 4_LRE_vcf2smc_Chr04_test
+#SBATCH -J 7_LRE_vcf2smc_Chr04_test
 #SBATCH --account=ac_acblackman
-#SBATCH --partition=savio2_htc
+#SBATCH --partition=savio
 #SBATCH --qos=savio_normal
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=3
+#SBATCH --cpus-per-task=20
 #SBATCH --time=72:00:00
-#SBATCH --mem=32000
-#SBATCH -o /global/scratch/users/peter_stokes/err_outs/4_LRE_vcf2smc_Chr04_test.out
-#SBATCH -e /global/scratch/users/peter_stokes/err_outs/4_LRE_vcf2smc_Chr04_test.err
+#SBATCH --mem=64000
+#SBATCH -o /global/scratch/users/peter_stokes/err_outs/7_LRE_vcf2smc_Chr04_test.out
+#SBATCH -e /global/scratch/users/peter_stokes/err_outs/7_LRE_vcf2smc_Chr04_test.err
 #SBATCH --mail-user=peter_stokes@berkeley.edu
 #SBATCH --mail-type=All
 
@@ -18,7 +18,7 @@ SINGULARITY_CACHEDIR=/global/scratch/users/peter_stokes
 for sample in Havasupai Laguna_Pueblo Hopi_real_NEW;
     do singularity exec -B /global/scratch/users/peter_stokes /global/scratch/users/peter_stokes/smcpp_latest.sif \
     smc++ vcf2smc \
-    --cores 3 \
+    --cores 20 \
     -d ${sample} ${sample} \
     /global/scratch/users/peter_stokes/Chapter1/VCF_for_smcpp/PS_Chapter1_biallelicSNPS_G4_hardFilteredInvariants_Chr04_missingPosReplaced_sorted.vcf.gz \
     /global/scratch/users/peter_stokes/Chapter1/smcpp/vcf2smc_output/LRE_${sample}_Chr04_test.smc.gz \

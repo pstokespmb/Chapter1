@@ -1,6 +1,6 @@
 #!/bin/bash 
 #SBATCH -D /global/scratch/users/peter_stokes/Chapter1/VCF_for_smcpp
-#SBATCH -J 3_LRE_vcf2smc_Chr14_test
+#SBATCH -J 6_LRE_vcf2smc_Chr14_test
 #SBATCH --account=ac_acblackman
 #SBATCH --partition=savio2_htc
 #SBATCH --qos=savio_normal
@@ -8,8 +8,8 @@
 #SBATCH --cpus-per-task=3
 #SBATCH --time=72:00:00
 #SBATCH --mem=32000
-#SBATCH -o /global/scratch/users/peter_stokes/err_outs/3_LRE_vcf2smc_Chr14_test.out
-#SBATCH -e /global/scratch/users/peter_stokes/err_outs/3_LRE_vcf2smc_Chr14_test.err
+#SBATCH -o /global/scratch/users/peter_stokes/err_outs/6_LRE_vcf2smc_Chr14_test.out
+#SBATCH -e /global/scratch/users/peter_stokes/err_outs/6_LRE_vcf2smc_Chr14_test.err
 #SBATCH --mail-user=peter_stokes@berkeley.edu
 #SBATCH --mail-type=All
 

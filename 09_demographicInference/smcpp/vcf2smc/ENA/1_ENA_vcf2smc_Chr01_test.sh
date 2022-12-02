@@ -5,9 +5,9 @@
 #SBATCH --partition=savio2_htc
 #SBATCH --qos=rosalind_htc2_normal
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=4
-#SBATCH --time=400:00:00
-#SBATCH --mem=42000
+#SBATCH --cpus-per-task=3
+#SBATCH --time=72:00:00
+#SBATCH --mem=32000
 #SBATCH -o /global/scratch/users/peter_stokes/err_outs/1_ENA_vcf2smc_Chr01_test.out
 #SBATCH -e /global/scratch/users/peter_stokes/err_outs/1_ENA_vcf2smc_Chr01_test.err
 #SBATCH --mail-user=peter_stokes@berkeley.edu
@@ -18,7 +18,7 @@ SINGULARITY_CACHEDIR=/global/scratch/users/peter_stokes
 for sample in ann10_ccIL ann29_neSD;
     do singularity exec -B /global/scratch/users/peter_stokes /global/scratch/users/peter_stokes/smcpp_latest.sif \
     smc++ vcf2smc \
-    --cores 4 \
+    --cores 3 \
     --mask /global/scratch/users/peter_stokes/Chapter1/masks_for_smcpp/InversionRegions_Chr01.bed.gz \
     -d ${sample} ${sample} \
     /global/scratch/users/peter_stokes/Chapter1/VCF_for_smcpp/PS_Chapter1_biallelicSNPS_G4_hardFilteredInvariants_Chr01_missingPosReplaced_sorted.vcf.gz \
