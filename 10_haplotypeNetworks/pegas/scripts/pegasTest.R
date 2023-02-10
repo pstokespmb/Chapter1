@@ -1,0 +1,39 @@
+library(pegas)
+library(vcfR)
+library(xlsx)
+
+
+#where to find files for pegas
+setwd("/Users/peterstokes/Desktop/pegas")
+
+######################
+######################
+#######PLASTOME#######
+######################
+######################
+
+file_to_use <- "GATK_plastome_filtered_mapQ30_SNPs_3_newNames.recode.vcf"   
+Sample_matrix_for_popart <- read.xlsx("HaploNaming_PeterStokes.xlsx", sheetName = "Pop_art_import")
+
+# Reading in the VCF file and storing info on it
+gene_investigated_info <- VCFloci(file_to_use)
+gene_investigated <- read.vcf(file_to_use)
+names(gene_investigated) <- paste0(gene_investigated_info$POS)
+
+# Figuring out how many SNPs are covered in the samples
+table_SNP_characterized <- as.data.frame(!gene_investigated[,]==".")
+Number_SNPs_per_sample <- as.data.frame(rowSums(table_SNP_characterized))
+write.csv(Number_SNPs_per_sample, "Plastome_SNPs_covered.csv")
+
+Good_data <- gene_investigated[which(Number_SNPs_per_sample$`rowSums(table_SNP_characterized)` > (0.95 * length(table_SNP_characterized))) ,]
+Good_data_SNP <- as.data.frame(!Good_data[,]==".")
+Good_data_SNP_filtered <- apply(Good_data_SNP, 2, function(x)(all(x)))
+Good_data_cleaned <- Good_data[,which(Good_data_SNP_filtered == TRUE)]
+Matrix_haplotypes_good <- haplotype(Good_data_cleaned, locus = 1:length(Good_data_cleaned), compress = FALSE,  check.phase = TRUE)
+Matrix_haplotypes_good <- t(Matrix_haplotypes_good)
+row.names(Matrix_haplotypes_good) <- rownames(Good_data_cleaned)
+write.dna(Matrix_haplotypes_good, file = "Plastome_95.fasta", format = "fasta", colsep = "", nbcol = -1)
+Good_data_popart <- Sample_matrix_for_popart[Sample_matrix_for_popart$Name %in% rownames(Good_data_cleaned), ]
+write.csv(Good_data_popart, file = "Plastome_95_traits.csv", row.names = FALSE)
+
+

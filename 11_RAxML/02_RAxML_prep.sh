@@ -1,0 +1,49 @@
+#!/bin/bash 
+#SBATCH -D /global/scratch2/peter_stokes/ANGSD/outs
+#SBATCH -J concat
+#SBATCH --account=co_rosalind
+#SBATCH --partition=savio3_xlmem
+#SBATCH --qos=rosalind_xlmem3_normal
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=52
+#SBATCH --time=400:00:00
+#SBATCH --mem=1500000
+#SBATCH -o /global/scratch2/peter_stokes/err_outs/concat.out
+#SBATCH -e /global/scratch2/peter_stokes/err_outs/concat.err
+#SBATCH --mail-user=peter_stokes@berkeley.edu
+#SBATCH --mail-type=All
+
+module load bcftools/1.6
+module load htslib/1.6
+module load python/3.6
+
+# VCF files below to merge
+
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr01.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr02.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr03.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr04.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr05.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr06.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr07.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr08.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr09.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr10.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr11.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr12.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr13.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr14.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr15.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr16.bcf
+#angsd_includeMEX_noAncients_noNonAnnuus_Chr17.bcf
+
+bcftools concat angsd_includeMEX_noAncients_noNonAnnuus_Chr01.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr02.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr03.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr04.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr05.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr06.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr07.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr08.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr09.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr10.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr11.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr12.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr13.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr14.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr15.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr16.bcf angsd_includeMEX_noAncients_noNonAnnuus_Chr17.bcf -o angsd_includeMEX_noAncients_noNonAnnuus_allChrom.vcf.gz -O z
+
+tabix -p vcf angsd_includeMEX_noAncients_noNonAnnuus_allChrom.vcf.gz
+
+bcftools reheader --samples VCFSampleNameChange_newNames.txt -o angsd_includeMEX_noAncients_noNonAnnuus_allChrom_NewNames.vcf.gz angsd_includeMEX_noAncients_noNonAnnuus_allChrom.vcf.gz
+
+tabix -p vcf angsd_includeMEX_noAncients_noNonAnnuus_allChrom_NewNames.vcf.gz
+
+python /global/scratch2/peter_stokes/RAxML/scripts/vcf2phylip.py -i angsd_includeMEX_noAncients_noNonAnnuus_allChrom_NewNames.vcf.gz --output-folder /global/scratch2/peter_stokes/RAxML/outs --output-prefix angsd_includeMEX_noAncients_noNonAnnuus_allChrom_NewNames_TEST1 -m 121 -f -w

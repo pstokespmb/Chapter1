@@ -1,5 +1,0 @@
-genotypename: 	smartPCA_Intraspecific.geno
-snpname:      	smartPCA_Intraspecific_ChrFixed.snp
-indivname:    	smartPCA_Intraspecific.ind
-evecoutname:  	smartPCA_Intraspecific.eigenvector
-evaloutname:  	smartPCA_Intraspecific.eigenvalues
