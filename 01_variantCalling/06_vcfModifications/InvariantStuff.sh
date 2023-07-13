@@ -1,0 +1,39 @@
+#!/bin/bash 
+#SBATCH -D /global/scratch/users/peter_stokes/Chapter1/VariantCalling/VCFprocessing
+#SBATCH -J InvariantStuff
+#SBATCH --partition=savio2_htc
+#SBATCH --account=co_rosalind
+#SBATCH --qos=rosalind_htc2_normal
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=12
+#SBATCH --time=72:00:00
+#SBATCH -o /global/scratch/users/peter_stokes/err_outs/InvariantStuff.out
+#SBATCH -e /global/scratch/users/peter_stokes/err_outs/InvariantStuff.err
+#SBATCH --mail-user=peter_stokes@berkeley.edu
+#SBATCH --mail-type=All
+
+module load htslib/1.6
+module load bcftools/1.6
+
+###concatenate chromosome chunks
+
+bcftools concat \
+PS_Chapter1_Chr01_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr02_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr03_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr04_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr05_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr06_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr07_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr08_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr09_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr10_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr11_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr12_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr13_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr14_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr15_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr16_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz \
+PS_Chapter1_Chr17_concatenatedRaw_annotated_invariantsOnly_filterInfo_hardFiltered.vcf.gz -Oz -o PS_Chapter1_allChrom_invariantsOnly_hardFiltered.vcf.gz
+
+tabix -p vcf -f PS_Chapter1_allChrom_invariantsOnly_hardFiltered.vcf.gz

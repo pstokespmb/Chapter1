@@ -1,0 +1,107 @@
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr01.bed > genic_Chr01_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr02.bed > genic_Chr02_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr03.bed > genic_Chr03_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr04.bed > genic_Chr04_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr05.bed > genic_Chr05_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr06.bed > genic_Chr06_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr07.bed > genic_Chr07_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr08.bed > genic_Chr08_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr09.bed > genic_Chr09_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr10.bed > genic_Chr10_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr11.bed > genic_Chr11_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr12.bed > genic_Chr12_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr13.bed > genic_Chr13_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr14.bed > genic_Chr14_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr15.bed > genic_Chr15_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr16.bed > genic_Chr16_PlusMinus5k.bed
+awk 'BEGIN{FS=OFS="\t"} {print $1, $2-5000, $3+5000}' genic_Chr17.bed > genic_Chr17_PlusMinus5k.bed
+
+genic_Chr01.bed
+genic_Chr02.bed
+genic_Chr03.bed
+genic_Chr04.bed
+genic_Chr05.bed
+genic_Chr06.bed
+genic_Chr07.bed
+genic_Chr08.bed
+genic_Chr09.bed
+genic_Chr10.bed
+genic_Chr11.bed
+genic_Chr12.bed
+genic_Chr13.bed
+genic_Chr14.bed
+genic_Chr15.bed
+genic_Chr16.bed
+genic_Chr17.bed
+
+bedtools sort -i genic_Chr01_PlusMinus5k.bed > genic_Chr01_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr02_PlusMinus5k.bed > genic_Chr02_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr03_PlusMinus5k.bed > genic_Chr03_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr04_PlusMinus5k.bed > genic_Chr04_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr05_PlusMinus5k.bed > genic_Chr05_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr06_PlusMinus5k.bed > genic_Chr06_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr07_PlusMinus5k.bed > genic_Chr07_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr08_PlusMinus5k.bed > genic_Chr08_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr09_PlusMinus5k.bed > genic_Chr09_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr10_PlusMinus5k.bed > genic_Chr10_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr11_PlusMinus5k.bed > genic_Chr11_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr12_PlusMinus5k.bed > genic_Chr12_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr13_PlusMinus5k.bed > genic_Chr13_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr14_PlusMinus5k.bed > genic_Chr14_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr15_PlusMinus5k.bed > genic_Chr15_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr16_PlusMinus5k.bed > genic_Chr16_PlusMinus5k_sorted.bed
+bedtools sort -i genic_Chr17_PlusMinus5k.bed > genic_Chr17_PlusMinus5k_sorted.bed
+
+bedtools merge -i genic_Chr01_PlusMinus5k_sorted.bed > genic_Chr01_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr02_PlusMinus5k_sorted.bed > genic_Chr02_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr03_PlusMinus5k_sorted.bed > genic_Chr03_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr04_PlusMinus5k_sorted.bed > genic_Chr04_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr05_PlusMinus5k_sorted.bed > genic_Chr05_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr06_PlusMinus5k_sorted.bed > genic_Chr06_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr07_PlusMinus5k_sorted.bed > genic_Chr07_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr08_PlusMinus5k_sorted.bed > genic_Chr08_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr09_PlusMinus5k_sorted.bed > genic_Chr09_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr10_PlusMinus5k_sorted.bed > genic_Chr10_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr11_PlusMinus5k_sorted.bed > genic_Chr11_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr12_PlusMinus5k_sorted.bed > genic_Chr12_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr13_PlusMinus5k_sorted.bed > genic_Chr13_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr14_PlusMinus5k_sorted.bed > genic_Chr14_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr15_PlusMinus5k_sorted.bed > genic_Chr15_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr16_PlusMinus5k_sorted.bed > genic_Chr16_PlusMinus5k_sorted_collapsed.bed
+bedtools merge -i genic_Chr17_PlusMinus5k_sorted.bed > genic_Chr17_PlusMinus5k_sorted_collapsed.bed
+
+cat genic_Chr01_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr02_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr03_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr04_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr05_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr06_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr07_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr08_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr09_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr10_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr11_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr12_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr13_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr14_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr15_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr16_PlusMinus5k_sorted_collapsed.bed \
+genic_Chr17_PlusMinus5k_sorted_collapsed.bed > genic_allChrom_PlusMinus5k_sorted_collapsed.bed
+
+01
+02
+03
+04
+05
+06
+07
+08
+09
+10
+11
+12
+13
+14
+15
+16
+17

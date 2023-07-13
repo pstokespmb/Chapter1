@@ -1,0 +1,821 @@
+# -*- mode: Yaml; -*-
+# Default options.
+# Can also be specific for a set of samples, libraries, and lanes,
+# by including the "Options" hierarchy at the same level as those
+# samples, libraries, or lanes below.
+Options:
+  # Sequencing platform, see SAM/BAM reference for valid values
+  Platform: Illumina
+  # Quality offset for Phred scores, either 33 (Sanger/Illumina 1.8+)
+  # or 64 (Illumina 1.3+ / 1.5+). For Bowtie2 it is also possible to
+  # specify 'Solexa', to handle reads on the Solexa scale. This is
+  # used during adapter-trimming and sequence alignment
+  QualityOffset: 33
+
+  # Settings for trimming of reads, see AdapterRemoval man-page
+  AdapterRemoval:
+     # Set and uncomment to override defaults adapter sequences
+#     --adapter1: AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG
+#     --adapter2: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
+     # Some BAM pipeline defaults differ from AR defaults;
+     # To override, change these value(s):
+     --mm: 3
+     --minlength: 25
+     # Extra features enabled by default; change 'yes' to 'no' to disable
+     --collapse: no
+     --trimns: yes
+     --trimqualities: yes
+     # Increase the maximum Phred allowed for input FASTQs, as well as for merged bases
+     # when using --collapse (default = 41). This is needed for some modern FASTQs.
+#     --qualitymax: 42
+
+  # Settings for aligners supported by the pipeline
+  Aligners:
+    # Choice of aligner software to use, either "BWA" or "Bowtie2"
+    Program: BWA
+
+    # Settings for mappings performed using BWA
+    BWA:
+      # One of "backtrack", "bwasw", or "mem"; see the BWA documentation
+      # for a description of each algorithm (defaults to 'backtrack')
+      Algorithm: backtrack
+      # Filter aligned reads with a mapping quality (Phred) below this value
+      MinQuality: 0
+      # Filter reads that did not map to the reference sequence
+      FilterUnmappedReads: yes
+      # May be disabled ("no") for aDNA alignments with the 'aln' algorithm.
+      # Post-mortem damage localizes to the seed region, which BWA expects to
+      # have few errors (sets "-l"). See http://pmid.us/22574660
+      UseSeed: no
+      # Additional command-line options may be specified below. For 'backtrack' these
+      # are applied to the "bwa aln". See Bowtie2 for more examples.
+#      -n: 0.04
+
+    # Settings for mappings performed using Bowtie2
+    Bowtie2:
+      # Filter aligned reads with a mapping quality (Phred) below this value
+      MinQuality: 0
+      # Filter reads that did not map to the reference sequence
+      FilterUnmappedReads: yes
+      # Examples of how to add additional command-line options
+#      --trim5: 5
+#      --trim3: 5
+      # Note that the colon is required, even if no value is specified
+      --very-sensitive:
+      # Example of how to specify multiple values for an option
+#      --rg:
+#        - CN:SequencingCenterNameHere
+#        - DS:DescriptionOfReadGroup
+
+  # Command-line options for mapDamage; use long-form options(--length not -l):
+  mapDamage:
+    # By default, the pipeline will downsample the input to 100k hits
+    # when running mapDamage; remove to use all hits
+    --downsample: 100000
+
+  # Set to 'yes' exclude a type of trimmed reads from alignment / analysis;
+  # possible read-types reflect the output of AdapterRemoval
+  ExcludeReads:
+    # Exclude single-end reads (yes / no)?
+    Single: no
+    # Exclude non-collapsed paired-end reads (yes / no)?
+    Paired: no
+    # Exclude paired-end reads for which the mate was discarded (yes / no)?
+    Singleton: no
+    # Exclude overlapping paired-ended reads collapsed into a single sequence
+    # by AdapterRemoval (yes / no)?
+    Collapsed: no
+    # Like 'Collapsed', but only for collapsed reads truncated due to the
+    # presence of ambiguous or low quality bases at read termini (yes / no).
+    CollapsedTruncated: no
+
+  # Optional steps to perform during processing.
+  Features:
+    # If set to 'filter', PCR duplicates are removed from the output files; if set to
+    # 'mark', PCR duplicates are flagged with bit 0x400, and not removed from the
+    # output files; if set to 'no', the reads are assumed to not have been amplified.
+    PCRDuplicates: filter
+    # Set to 'no' to disable mapDamage; set to 'plots' to build basic mapDamage plots;
+    # set to 'model' to build plots and post-mortem damage models; and set to 'rescale'
+    # to build plots, models, and BAMs with rescaled quality scores. All analyses are
+    # carried out per library.
+    mapDamage: rescale
+    # Generate coverage information for the final BAM and for each 'RegionsOfInterest'
+    # specified in 'Prefixes' (yes / no).
+    Coverage: yes
+    # Generate histograms of number of sites with a given read-depth, from 0 to 200,
+    # for each BAM and for each 'RegionsOfInterest' specified in 'Prefixes' (yes / no).
+    Depths: yes
+    # Generate summary table for each target (yes / no)
+    Summary: yes
+
+Prefixes:
+  # Replace 'NAME_OF_PREFIX' with name of the prefix; this name
+  # is used in summary statistics and as part of output filenames.
+
+  XRQ_nuclear:
+    # Replace 'PATH_TO_PREFIX' with the path to .fasta file containing the
+    # references against which reads are to be mapped. Using the same name
+    # as filename is strongly recommended (e.g. /path/to/Human_g1k_v37.fasta
+    # should be named 'Human_g1k_v37').
+    Path: "/global/scratch/users/peter_stokes/references/HanXRQr2.0-SUNRISE-2.1.genome.genomeONLY.fasta"
+
+    # (Optional) Uncomment and replace 'PATH_TO_BEDFILE' with the path to a
+    # .bed file listing extra regions for which coverage / depth statistics
+    # should be calculated; if no names are specified for the BED records,
+    # results are named after the chromosome / contig. Change 'NAME' to the
+    # name to be used in summary statistics and output filenames.
+#    RegionsOfInterest:
+#      Annotation: "path/file.bed"
+#      Important_Genes: "path/file.bed"
+
+  Plastome:
+    # Replace 'PATH_TO_PREFIX' with the path to .fasta file containing the
+    # references against which reads are to be mapped. Using the same name
+    # as filename is strongly recommended (e.g. /path/to/Human_g1k_v37.fasta
+    # should be named 'Human_g1k_v37').
+    Path: "/global/scratch/users/peter_stokes/references/HanXRQr2.0-SUNRISE-2.1.genome.CP.fasta"
+
+  Mito:
+    # Replace 'PATH_TO_PREFIX' with the path to .fasta file containing the
+    # references against which reads are to be mapped. Using the same name
+    # as filename is strongly recommended (e.g. /path/to/Human_g1k_v37.fasta
+    # should be named 'Human_g1k_v37').
+    Path: "/global/scratch/users/peter_stokes/references/HanXRQr2.0-SUNRISE-2.1.genome.MT.fasta"
+
+# Mapping targets are specified using the following structure. Replace 'NAME_OF_TARGET'
+# with the desired prefix for filenames.
+
+
+#CuevadelGallo:
+# CuevadelGallo:
+#   CuevadelGallo:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/SF_69_Cueva_R1.fastq.gz"
+#     Lane2:
+#       Single: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/SF_69_Cueva_capture.trimmed.fastq.gz"
+#
+#GB_new:
+# GB_new:
+#   GB_new:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/GB_1a/GB_1a_CKDL210010167-1a-AK22296-AK22295_HGCL3CCX2_L1_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/GB_1b/GB_1b_CKDL210010167-1a-AK23184-AK14682_HGCL3CCX2_L1_{Pair}.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/GB_2a/GB_2a_CKDL210010167-1a-AK3744-AK3519_HGCL3CCX2_L1_{Pair}.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/GB_2b/GB_2b_CKDL210010167-1a-AK23203-AK23204_HGCL3CCX2_L1_{Pair}.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/GB_3/GB_3_CKDL210010167-1a-AK9739-AK9975_HGCL3CCX2_L1_{Pair}.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/GB_4/GB_4_CKDL210010167-1a-AK22825-AK13317_HGCL3CCX2_L1_{Pair}.fastq.gz"
+#
+#SF_79:
+# SF_79:
+#   SF_79:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/SF_79_c1/SF_79_c1_CKDL210010168-1a-AK4913-AK4780_HGCL3CCX2_L2_{Pair}.fastq.gz"
+#
+#SF_09_b_Tularosa_4000-1-2151_pilot_disk:
+# SF_09_b_Tularosa_4000-1-2151_pilot_disk:
+#   SF_09_b_Tularosa_4000-1-2151_pilot_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_09_b_Tularosa_4000-1-2151_pilot_disk/SF_09_b_Tularosa_4000-1-2151_pilot_disk_AGTGAG_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_09_b_Tularosa_4000-1-2151_pilot_disk/SF_09_b_Tularosa_4000-1-2151_pilot_disk_AGTGAG_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_09_b_Tularosa_4000-1-2151_pilot_disk/SF_09_b_Tularosa_4000-1-2151_pilot_disk_AGTGAG_L006_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_09_b_Tularosa_4000-1-2151_pilot_disk/SF_09_b_Tularosa_4000-1-2151_pilot_disk_AGTGAG_L006_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_09_b_Tularosa_4000-1-2151_pilot_disk/SF_09_b_Tularosa_4000-1-2151_pilot_disk_AGTGAG_L006_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_09_b_Tularosa_4000-1-2151_pilot_disk/SF_09_b_Tularosa_4000-1-2151_pilot_disk_AGTGAG_L006_R1_006.fastq.gz"
+#     Lane7: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_09_b_Tularosa_4000-1-2151_pilot_disk/SF_09_b_Tularosa_4000-1-2151_pilot_disk_AGTGAG_L006_R1_007.fastq.gz"
+#     Lane8: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_09_b_Tularosa_4000-1-2151_pilot_disk/SF_09_b_Tularosa_4000-1-2151_pilot_disk_AGTGAG_L006_R1_008.fastq.gz"
+#     Lane9: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_09_b_Tularosa_4000-1-2151_pilot_disk/SF_09_b_Tularosa_4000-1-2151_pilot_disk_AGTGAG_L006_R1_009.fastq.gz"
+#     Lane10: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_09_b_Tularosa_4000-1-2151_pilot_disk/SF_09_b_Tularosa_4000-1-2151_pilot_disk_AGTGAG_L006_R1_010.fastq.gz"
+#
+#SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk:
+# SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk:
+#   SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk/SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk_GAGTAG_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk/SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk_GAGTAG_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk/SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk_GAGTAG_L006_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk/SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk_GAGTAG_L006_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk/SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk_GAGTAG_L006_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk/SF_11_b_Newt_Kash_16389_Lab_1083_pilot_disk_GAGTAG_L006_R1_006.fastq.gz"
+#
+#SF_61_a_Edens_Bluff_15478_pilot_achene:
+# SF_61_a_Edens_Bluff_15478_pilot_achene:
+#   SF_61_a_Edens_Bluff_15478_pilot_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_a_Edens_Bluff_15478_pilot_achene/SF_61_a_Edens_Bluff_15478_pilot_achene_GTCGTC_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_a_Edens_Bluff_15478_pilot_achene/SF_61_a_Edens_Bluff_15478_pilot_achene_GTCGTC_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_a_Edens_Bluff_15478_pilot_achene/SF_61_a_Edens_Bluff_15478_pilot_achene_GTCGTC_L006_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_a_Edens_Bluff_15478_pilot_achene/SF_61_a_Edens_Bluff_15478_pilot_achene_GTCGTC_L006_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_a_Edens_Bluff_15478_pilot_achene/SF_61_a_Edens_Bluff_15478_pilot_achene_GTCGTC_L006_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_a_Edens_Bluff_15478_pilot_achene/SF_61_a_Edens_Bluff_15478_pilot_achene_GTCGTC_L006_R1_006.fastq.gz"
+#     Lane7: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_a_Edens_Bluff_15478_pilot_achene/SF_61_a_Edens_Bluff_15478_pilot_achene_GTCGTC_L006_R1_007.fastq.gz"
+#     Lane8: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_a_Edens_Bluff_15478_pilot_achene/SF_61_a_Edens_Bluff_15478_pilot_achene_GTCGTC_L006_R1_008.fastq.gz"
+#
+#SF_61_b_Edens_Bluff_15478_pilot_seed:
+# SF_61_b_Edens_Bluff_15478_pilot_seed:
+#   SF_61_b_Edens_Bluff_15478_pilot_seed:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_b_Edens_Bluff_15478_pilot_seed/SF_61_b_Edens_Bluff_15478_pilot_seed_TCGATG_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_b_Edens_Bluff_15478_pilot_seed/SF_61_b_Edens_Bluff_15478_pilot_seed_TCGATG_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_b_Edens_Bluff_15478_pilot_seed/SF_61_b_Edens_Bluff_15478_pilot_seed_TCGATG_L006_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_b_Edens_Bluff_15478_pilot_seed/SF_61_b_Edens_Bluff_15478_pilot_seed_TCGATG_L006_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_b_Edens_Bluff_15478_pilot_seed/SF_61_b_Edens_Bluff_15478_pilot_seed_TCGATG_L006_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_b_Edens_Bluff_15478_pilot_seed/SF_61_b_Edens_Bluff_15478_pilot_seed_TCGATG_L006_R1_006.fastq.gz"
+#     Lane7: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_b_Edens_Bluff_15478_pilot_seed/SF_61_b_Edens_Bluff_15478_pilot_seed_TCGATG_L006_R1_007.fastq.gz"
+#     Lane8: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120217_hiseq2b/Sample_SF_61_b_Edens_Bluff_15478_pilot_seed/SF_61_b_Edens_Bluff_15478_pilot_seed_TCGATG_L006_R1_008.fastq.gz"
+#
+#SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene:
+# SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene:
+#   SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene/SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene_TCGATG_L004_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene/SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene_TCGATG_L004_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene/SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene_TCGATG_L004_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene/SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene_TCGATG_L004_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene/SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene_TCGATG_L004_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene/SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene_TCGATG_L004_R1_006.fastq.gz"
+#     Lane7: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene/SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene_TCGATG_L004_R1_007.fastq.gz"
+#     Lane8: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene/SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene_TCGATG_L004_R1_008.fastq.gz"
+#     Lane9: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene/SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene_TCGATG_L004_R1_009.fastq.gz"
+#     Lane10: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene/SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene_TCGATG_L004_R1_010.fastq.gz"
+#     Lane11: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene/SF_62_a_Salts_Cave_24135_Ky_1946_pilot_1_achene_TCGATG_L004_R1_011.fastq.gz"
+#
+#SF_62_b_Salts_Cave_24135_Ky_1946_pilot_11_achenes:
+# SF_62_b_Salts_Cave_24135_Ky_1946_pilot_11_achenes:
+#   SF_62_b_Salts_Cave_24135_Ky_1946_pilot_11_achenes:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20120322_hiseq1b/Sample_SF_62_b_Salts_Cave_24135_Ky_1946_pilot_11_achenes/SF_62_b_Salts_Cave_24135_Ky_1946_pilot_11_achenes_TACGAG_L004_R1_001.fastq.gz"
+#
+#SF_01_Newt_Kash_16447_disk:
+# SF_01_Newt_Kash_16447_disk:
+#   SF_01_Newt_Kash_16447_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_006.fastq.gz"
+#     Lane7: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_007.fastq.gz"
+#     Lane8: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_008.fastq.gz"
+#     Lane9: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_009.fastq.gz"
+#     Lane10: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_010.fastq.gz"
+#     Lane11: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_011.fastq.gz"
+#     Lane12: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_01_Newt_Kash_16447_disk/SF_01_Newt_Kash_16447_disk_TGAACA_L008_R1_012.fastq.gz"
+#
+#SF_02_Alred_32_4_98a_disk:
+# SF_02_Alred_32_4_98a_disk:
+#   SF_02_Alred_32_4_98a_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_02_Alred_32_4_98a_disk/SF_02_Alred_32_4_98a_disk_GTATCT_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_02_Alred_32_4_98a_disk/SF_02_Alred_32_4_98a_disk_GTATCT_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_02_Alred_32_4_98a_disk/SF_02_Alred_32_4_98a_disk_GTATCT_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_02_Alred_32_4_98a_disk/SF_02_Alred_32_4_98a_disk_GTATCT_L008_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_02_Alred_32_4_98a_disk/SF_02_Alred_32_4_98a_disk_GTATCT_L008_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_02_Alred_32_4_98a_disk/SF_02_Alred_32_4_98a_disk_GTATCT_L008_R1_006.fastq.gz"
+#
+#SF_03_Putnam_32_44_257_disk:
+# SF_03_Putnam_32_44_257_disk:
+#   SF_03_Putnam_32_44_257_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_03_Putnam_32_44_257_disk/SF_03_Putnam_32_44_257_disk_CTGACA_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_03_Putnam_32_44_257_disk/SF_03_Putnam_32_44_257_disk_CTGACA_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_03_Putnam_32_44_257_disk/SF_03_Putnam_32_44_257_disk_CTGACA_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_03_Putnam_32_44_257_disk/SF_03_Putnam_32_44_257_disk_CTGACA_L008_R1_004.fastq.gz"
+#
+#SF_04_Montgomery_4_32_34_59_disk:
+# SF_04_Montgomery_4_32_34_59_disk:
+#   SF_04_Montgomery_4_32_34_59_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_04_Montgomery_4_32_34_59_disk/SF_04_Montgomery_4_32_34_59_disk_TGCAGG_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_04_Montgomery_4_32_34_59_disk/SF_04_Montgomery_4_32_34_59_disk_TGCAGG_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_04_Montgomery_4_32_34_59_disk/SF_04_Montgomery_4_32_34_59_disk_TGCAGG_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_04_Montgomery_4_32_34_59_disk/SF_04_Montgomery_4_32_34_59_disk_TGCAGG_L008_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_04_Montgomery_4_32_34_59_disk/SF_04_Montgomery_4_32_34_59_disk_TGCAGG_L008_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_04_Montgomery_4_32_34_59_disk/SF_04_Montgomery_4_32_34_59_disk_TGCAGG_L008_R1_006.fastq.gz"
+#     Lane7: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_04_Montgomery_4_32_34_59_disk/SF_04_Montgomery_4_32_34_59_disk_TGCAGG_L008_R1_007.fastq.gz"
+#
+#SF_05_Craddock_34_7_33_disk:
+# SF_05_Craddock_34_7_33_disk:
+#   SF_05_Craddock_34_7_33_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_05_Craddock_34_7_33_disk/SF_05_Craddock_34_7_33_disk_ACTGCC_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_05_Craddock_34_7_33_disk/SF_05_Craddock_34_7_33_disk_ACTGCC_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_05_Craddock_34_7_33_disk/SF_05_Craddock_34_7_33_disk_ACTGCC_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_05_Craddock_34_7_33_disk/SF_05_Craddock_34_7_33_disk_ACTGCC_L008_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_05_Craddock_34_7_33_disk/SF_05_Craddock_34_7_33_disk_ACTGCC_L008_R1_005.fastq.gz"
+#
+#SF_06_Green_Bluff_33_7_154_disk:
+# SF_06_Green_Bluff_33_7_154_disk:
+#   SF_06_Green_Bluff_33_7_154_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_06_Green_Bluff_33_7_154_disk/SF_06_Green_Bluff_33_7_154_disk_GCAACG_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_06_Green_Bluff_33_7_154_disk/SF_06_Green_Bluff_33_7_154_disk_GCAACG_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_06_Green_Bluff_33_7_154_disk/SF_06_Green_Bluff_33_7_154_disk_GCAACG_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_06_Green_Bluff_33_7_154_disk/SF_06_Green_Bluff_33_7_154_disk_GCAACG_L008_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_06_Green_Bluff_33_7_154_disk/SF_06_Green_Bluff_33_7_154_disk_GCAACG_L008_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_06_Green_Bluff_33_7_154_disk/SF_06_Green_Bluff_33_7_154_disk_GCAACG_L008_R1_006.fastq.gz"
+#     Lane7: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_06_Green_Bluff_33_7_154_disk/SF_06_Green_Bluff_33_7_154_disk_GCAACG_L008_R1_007.fastq.gz"
+#     Lane8: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_06_Green_Bluff_33_7_154_disk/SF_06_Green_Bluff_33_7_154_disk_GCAACG_L008_R1_008.fastq.gz"
+#
+#SF_07_Edens_Bluff_32_3_27_disk:
+# SF_07_Edens_Bluff_32_3_27_disk:
+#   SF_07_Edens_Bluff_32_3_27_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_07_Edens_Bluff_32_3_27_disk/SF_07_Edens_Bluff_32_3_27_disk_CGACCT_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_07_Edens_Bluff_32_3_27_disk/SF_07_Edens_Bluff_32_3_27_disk_CGACCT_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_07_Edens_Bluff_32_3_27_disk/SF_07_Edens_Bluff_32_3_27_disk_CGACCT_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_07_Edens_Bluff_32_3_27_disk/SF_07_Edens_Bluff_32_3_27_disk_CGACCT_L008_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_07_Edens_Bluff_32_3_27_disk/SF_07_Edens_Bluff_32_3_27_disk_CGACCT_L008_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_07_Edens_Bluff_32_3_27_disk/SF_07_Edens_Bluff_32_3_27_disk_CGACCT_L008_R1_006.fastq.gz"
+#     Lane7: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_07_Edens_Bluff_32_3_27_disk/SF_07_Edens_Bluff_32_3_27_disk_CGACCT_L008_R1_007.fastq.gz"
+#     Lane8: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20160715_hiseq6a/Sample_SF_07_Edens_Bluff_32_3_27_disk/SF_07_Edens_Bluff_32_3_27_disk_CGACCT_L008_R1_008.fastq.gz"
+#
+#SF_09_a_Tularosa_4000-1-2151_disk:
+# SF_09_a_Tularosa_4000-1-2151_disk:
+#   SF_09_a_Tularosa_4000-1-2151_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_09_a_Tularosa_4000-1-2151_disk/SF_09_a_Tularosa_4000-1-2151_disk_TGTCTG_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_09_a_Tularosa_4000-1-2151_disk/SF_09_a_Tularosa_4000-1-2151_disk_TGTCTG_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_09_a_Tularosa_4000-1-2151_disk/SF_09_a_Tularosa_4000-1-2151_disk_TGTCTG_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_09_a_Tularosa_4000-1-2151_disk/SF_09_a_Tularosa_4000-1-2151_disk_TGTCTG_L008_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_09_a_Tularosa_4000-1-2151_disk/SF_09_a_Tularosa_4000-1-2151_disk_TGTCTG_L008_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_09_a_Tularosa_4000-1-2151_disk/SF_09_a_Tularosa_4000-1-2151_disk_TGTCTG_L008_R1_006.fastq.gz"
+#
+#SF_10_Trinchera_Creek_disk:
+# SF_10_Trinchera_Creek_disk:
+#   SF_10_Trinchera_Creek_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_10_Trinchera_Creek_disk/SF_10_Trinchera_Creek_disk_ACGTGC_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_10_Trinchera_Creek_disk/SF_10_Trinchera_Creek_disk_ACGTGC_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_10_Trinchera_Creek_disk/SF_10_Trinchera_Creek_disk_ACGTGC_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_10_Trinchera_Creek_disk/SF_10_Trinchera_Creek_disk_ACGTGC_L008_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_10_Trinchera_Creek_disk/SF_10_Trinchera_Creek_disk_ACGTGC_L008_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_10_Trinchera_Creek_disk/SF_10_Trinchera_Creek_disk_ACGTGC_L008_R1_006.fastq.gz"
+#
+#SF_11_a_Newt_Kash_16389_Lab_1083_disk:
+# SF_11_a_Newt_Kash_16389_Lab_1083_disk:
+#   SF_11_a_Newt_Kash_16389_Lab_1083_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_11_a_Newt_Kash_16389_Lab_1083_disk/SF_11_a_Newt_Kash_16389_Lab_1083_disk_TGATCC_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_11_a_Newt_Kash_16389_Lab_1083_disk/SF_11_a_Newt_Kash_16389_Lab_1083_disk_TGATCC_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_11_a_Newt_Kash_16389_Lab_1083_disk/SF_11_a_Newt_Kash_16389_Lab_1083_disk_TGATCC_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_11_a_Newt_Kash_16389_Lab_1083_disk/SF_11_a_Newt_Kash_16389_Lab_1083_disk_TGATCC_L008_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_11_a_Newt_Kash_16389_Lab_1083_disk/SF_11_a_Newt_Kash_16389_Lab_1083_disk_TGATCC_L008_R1_005.fastq.gz"
+#     Lane6: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_11_a_Newt_Kash_16389_Lab_1083_disk/SF_11_a_Newt_Kash_16389_Lab_1083_disk_TGATCC_L008_R1_006.fastq.gz"
+#     Lane7: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_11_a_Newt_Kash_16389_Lab_1083_disk/SF_11_a_Newt_Kash_16389_Lab_1083_disk_TGATCC_L008_R1_007.fastq.gz"
+#     Lane8: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_11_a_Newt_Kash_16389_Lab_1083_disk/SF_11_a_Newt_Kash_16389_Lab_1083_disk_TGATCC_L008_R1_008.fastq.gz"
+#
+#SF_12_Putnum_32_44_132a_disk:
+# SF_12_Putnum_32_44_132a_disk:
+#   SF_12_Putnum_32_44_132a_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_12_Putnum_32_44_132a_disk/SF_12_Putnum_32_44_132a_disk_CTCTAG_L008_R1_001.fastq.gz"
+#
+#SF_13_Alred_32_4_159a_disk:
+# SF_13_Alred_32_4_159a_disk:
+#   SF_13_Alred_32_4_159a_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_13_Alred_32_4_159a_disk/SF_13_Alred_32_4_159a_disk_GAGAAG_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_13_Alred_32_4_159a_disk/SF_13_Alred_32_4_159a_disk_GAGAAG_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_13_Alred_32_4_159a_disk/SF_13_Alred_32_4_159a_disk_GAGAAG_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_13_Alred_32_4_159a_disk/SF_13_Alred_32_4_159a_disk_GAGAAG_L008_R1_004.fastq.gz"
+#
+#SF_14_Putnum_32_44_479_disk:
+# SF_14_Putnum_32_44_479_disk:
+#   SF_14_Putnum_32_44_479_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_14_Putnum_32_44_479_disk/SF_14_Putnum_32_44_479_disk_CACGAA_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_14_Putnum_32_44_479_disk/SF_14_Putnum_32_44_479_disk_CACGAA_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_14_Putnum_32_44_479_disk/SF_14_Putnum_32_44_479_disk_CACGAA_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_14_Putnum_32_44_479_disk/SF_14_Putnum_32_44_479_disk_CACGAA_L008_R1_004.fastq.gz"
+#
+#SF_15_Agnew_Bluff_32_1_168_disk:
+# SF_15_Agnew_Bluff_32_1_168_disk:
+#   SF_15_Agnew_Bluff_32_1_168_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_15_Agnew_Bluff_32_1_168_disk/SF_15_Agnew_Bluff_32_1_168_disk_CATAGA_L008_R1_001.fastq.gz"
+#
+#SF_17_Newt_Kash_16447_1217_1_achene:
+# SF_17_Newt_Kash_16447_1217_1_achene:
+#   SF_17_Newt_Kash_16447_1217_1_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_17_Newt_Kash_16447_1217_1_achene/SF_17_Newt_Kash_16447_1217_1_achene_CATCGT_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_17_Newt_Kash_16447_1217_1_achene/SF_17_Newt_Kash_16447_1217_1_achene_CATCGT_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_17_Newt_Kash_16447_1217_1_achene/SF_17_Newt_Kash_16447_1217_1_achene_CATCGT_L008_R1_003.fastq.gz"
+#
+#SF_18_Newt_Kash_4000_1_10329_2_achene:
+# SF_18_Newt_Kash_4000_1_10329_2_achene:
+#   SF_18_Newt_Kash_4000_1_10329_2_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_18_Newt_Kash_4000_1_10329_2_achene/SF_18_Newt_Kash_4000_1_10329_2_achene_TTGAAC_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_18_Newt_Kash_4000_1_10329_2_achene/SF_18_Newt_Kash_4000_1_10329_2_achene_TTGAAC_L008_R1_002.fastq.gz"
+#
+#SF_19_Montgomery_32_34_160_disk:
+# SF_19_Montgomery_32_34_160_disk:
+#   SF_19_Montgomery_32_34_160_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_19_Montgomery_32_34_160_disk/SF_19_Montgomery_32_34_160_disk_ACGTCG_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_19_Montgomery_32_34_160_disk/SF_19_Montgomery_32_34_160_disk_ACGTCG_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_19_Montgomery_32_34_160_disk/SF_19_Montgomery_32_34_160_disk_ACGTCG_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_19_Montgomery_32_34_160_disk/SF_19_Montgomery_32_34_160_disk_ACGTCG_L008_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_19_Montgomery_32_34_160_disk/SF_19_Montgomery_32_34_160_disk_ACGTCG_L008_R1_005.fastq.gz"
+#
+#SF_20_Poole_2_32_42_3_disk:
+# SF_20_Poole_2_32_42_3_disk:
+#   SF_20_Poole_2_32_42_3_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_20_Poole_2_32_42_3_disk/SF_20_Poole_2_32_42_3_disk_GCTACT_L008_R1_001.fastq.gz"
+#
+#SF_21_Edens_Bluff_32_3_1754b_1_disk:
+# SF_21_Edens_Bluff_32_3_1754b_1_disk:
+#   SF_21_Edens_Bluff_32_3_1754b_1_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_21_Edens_Bluff_32_3_1754b_1_disk/SF_21_Edens_Bluff_32_3_1754b_1_disk_AGTGAG_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_21_Edens_Bluff_32_3_1754b_1_disk/SF_21_Edens_Bluff_32_3_1754b_1_disk_AGTGAG_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_21_Edens_Bluff_32_3_1754b_1_disk/SF_21_Edens_Bluff_32_3_1754b_1_disk_AGTGAG_L008_R1_003.fastq.gz"
+#
+#SF_22_Edens_Bluff_32_3_247a_disk:
+# SF_22_Edens_Bluff_32_3_247a_disk:
+#   SF_22_Edens_Bluff_32_3_247a_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_22_Edens_Bluff_32_3_247a_disk/SF_22_Edens_Bluff_32_3_247a_disk_ACAGAG_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_22_Edens_Bluff_32_3_247a_disk/SF_22_Edens_Bluff_32_3_247a_disk_ACAGAG_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_22_Edens_Bluff_32_3_247a_disk/SF_22_Edens_Bluff_32_3_247a_disk_ACAGAG_L008_R1_003.fastq.gz"
+#
+#SF_23_Edens_Bluff_32_3_247b_disk:
+# SF_23_Edens_Bluff_32_3_247b_disk:
+#   SF_23_Edens_Bluff_32_3_247b_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_23_Edens_Bluff_32_3_247b_disk/SF_23_Edens_Bluff_32_3_247b_disk_CTCTGC_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_23_Edens_Bluff_32_3_247b_disk/SF_23_Edens_Bluff_32_3_247b_disk_CTCTGC_L008_R1_002.fastq.gz"
+#
+#SF_25_NM_cave_4000_1_2146_Lab_3190_disk:
+# SF_25_NM_cave_4000_1_2146_Lab_3190_disk:
+#   SF_25_NM_cave_4000_1_2146_Lab_3190_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_25_NM_cave_4000_1_2146_Lab_3190_disk/SF_25_NM_cave_4000_1_2146_Lab_3190_disk_CTATCA_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_25_NM_cave_4000_1_2146_Lab_3190_disk/SF_25_NM_cave_4000_1_2146_Lab_3190_disk_CTATCA_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_25_NM_cave_4000_1_2146_Lab_3190_disk/SF_25_NM_cave_4000_1_2146_Lab_3190_disk_CTATCA_L008_R1_003.fastq.gz"
+#
+#SF_26_Alred_32_4_103b_disk:
+# SF_26_Alred_32_4_103b_disk:
+#   SF_26_Alred_32_4_103b_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_26_Alred_32_4_103b_disk/SF_26_Alred_32_4_103b_disk_CGTATA_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_26_Alred_32_4_103b_disk/SF_26_Alred_32_4_103b_disk_CGTATA_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_26_Alred_32_4_103b_disk/SF_26_Alred_32_4_103b_disk_CGTATA_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_26_Alred_32_4_103b_disk/SF_26_Alred_32_4_103b_disk_CGTATA_L008_R1_004.fastq.gz"
+#     Lane5: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_26_Alred_32_4_103b_disk/SF_26_Alred_32_4_103b_disk_CGTATA_L008_R1_005.fastq.gz"
+#
+#SF_27_Beaver_Pond_34_2_279_achene:
+# SF_27_Beaver_Pond_34_2_279_achene:
+#   SF_27_Beaver_Pond_34_2_279_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_27_Beaver_Pond_34_2_279_achene/SF_27_Beaver_Pond_34_2_279_achene_GTGTAT_L008_R1_001.fastq.gz"
+#
+#SF_28_Edens_Bluff_32_3_1712_disk:
+# SF_28_Edens_Bluff_32_3_1712_disk:
+#   SF_28_Edens_Bluff_32_3_1712_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_28_Edens_Bluff_32_3_1712_disk/SF_28_Edens_Bluff_32_3_1712_disk_CGCTAT_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_28_Edens_Bluff_32_3_1712_disk/SF_28_Edens_Bluff_32_3_1712_disk_CGCTAT_L008_R1_002.fastq.gz"
+#
+#SF_29_Brown_Bluff_32_10_78_achene:
+# SF_29_Brown_Bluff_32_10_78_achene:
+#   SF_29_Brown_Bluff_32_10_78_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_29_Brown_Bluff_32_10_78_achene/SF_29_Brown_Bluff_32_10_78_achene_TGAACA_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_29_Brown_Bluff_32_10_78_achene/SF_29_Brown_Bluff_32_10_78_achene_TGAACA_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_29_Brown_Bluff_32_10_78_achene/SF_29_Brown_Bluff_32_10_78_achene_TGAACA_L008_R1_003.fastq.gz"
+#
+#SF_30_Edens_Bluff_32_3_247c_disk:
+# SF_30_Edens_Bluff_32_3_247c_disk:
+#   SF_30_Edens_Bluff_32_3_247c_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_30_Edens_Bluff_32_3_247c_disk/SF_30_Edens_Bluff_32_3_247c_disk_GTATCT_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_30_Edens_Bluff_32_3_247c_disk/SF_30_Edens_Bluff_32_3_247c_disk_GTATCT_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_30_Edens_Bluff_32_3_247c_disk/SF_30_Edens_Bluff_32_3_247c_disk_GTATCT_L008_R1_003.fastq.gz"
+#
+#SF_31_Cold_Oak_Fea_54_achene:
+# SF_31_Cold_Oak_Fea_54_achene:
+#   SF_31_Cold_Oak_Fea_54_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_31_Cold_Oak_Fea_54_achene/SF_31_Cold_Oak_Fea_54_achene_CAGCTA_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_31_Cold_Oak_Fea_54_achene/SF_31_Cold_Oak_Fea_54_achene_CAGCTA_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_31_Cold_Oak_Fea_54_achene/SF_31_Cold_Oak_Fea_54_achene_CAGCTA_L008_R1_003.fastq.gz"
+#
+#SF_32_Cloudsplitter_FS2318_disk:
+# SF_32_Cloudsplitter_FS2318_disk:
+#   SF_32_Cloudsplitter_FS2318_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_32_Cloudsplitter_FS2318_disk/SF_32_Cloudsplitter_FS2318_disk_ACATAC_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_32_Cloudsplitter_FS2318_disk/SF_32_Cloudsplitter_FS2318_disk_ACATAC_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_32_Cloudsplitter_FS2318_disk/SF_32_Cloudsplitter_FS2318_disk_ACATAC_L008_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_32_Cloudsplitter_FS2318_disk/SF_32_Cloudsplitter_FS2318_disk_ACATAC_L008_R1_004.fastq.gz"
+#
+#SF_33_Cloudsplitter_FS2280_achene:
+# SF_33_Cloudsplitter_FS2280_achene:
+#   SF_33_Cloudsplitter_FS2280_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_33_Cloudsplitter_FS2280_achene/SF_33_Cloudsplitter_FS2280_achene_AGCATG_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_33_Cloudsplitter_FS2280_achene/SF_33_Cloudsplitter_FS2280_achene_AGCATG_L008_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_33_Cloudsplitter_FS2280_achene/SF_33_Cloudsplitter_FS2280_achene_AGCATG_L008_R1_003.fastq.gz"
+#
+#SF_35_Cloudsplitter_unk_frg_2_disk:
+# SF_35_Cloudsplitter_unk_frg_2_disk:
+#   SF_35_Cloudsplitter_unk_frg_2_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_35_Cloudsplitter_unk_frg_2_disk/SF_35_Cloudsplitter_unk_frg_2_disk_TGTGAC_L008_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170119_hiseq4b/Sample_SF_35_Cloudsplitter_unk_frg_2_disk/SF_35_Cloudsplitter_unk_frg_2_disk_TGTGAC_L008_R1_002.fastq.gz"
+#
+#SF_36_Cloudsplitter_FS2316_achene:
+# SF_36_Cloudsplitter_FS2316_achene:
+#   SF_36_Cloudsplitter_FS2316_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_36_Cloudsplitter_FS2316_achene/SF_36_Cloudsplitter_FS2316_achene_CGTAGT_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_36_Cloudsplitter_FS2316_achene/SF_36_Cloudsplitter_FS2316_achene_CGTAGT_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_36_Cloudsplitter_FS2316_achene/SF_36_Cloudsplitter_FS2316_achene_CGTAGT_L006_R1_003.fastq.gz"
+#
+#SF_37_Cloudsplitter_Level_1_achene:
+# SF_37_Cloudsplitter_Level_1_achene:
+#   SF_37_Cloudsplitter_Level_1_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_37_Cloudsplitter_Level_1_achene/SF_37_Cloudsplitter_Level_1_achene_CAGCAC_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_37_Cloudsplitter_Level_1_achene/SF_37_Cloudsplitter_Level_1_achene_CAGCAC_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_37_Cloudsplitter_Level_1_achene/SF_37_Cloudsplitter_Level_1_achene_CAGCAC_L006_R1_003.fastq.gz"
+#
+#SF_38_Cloudsplitter_FS2353_achene:
+# SF_38_Cloudsplitter_FS2353_achene:
+#   SF_38_Cloudsplitter_FS2353_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_38_Cloudsplitter_FS2353_achene/SF_38_Cloudsplitter_FS2353_achene_ACTGCG_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_38_Cloudsplitter_FS2353_achene/SF_38_Cloudsplitter_FS2353_achene_ACTGCG_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_38_Cloudsplitter_FS2353_achene/SF_38_Cloudsplitter_FS2353_achene_ACTGCG_L006_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_38_Cloudsplitter_FS2353_achene/SF_38_Cloudsplitter_FS2353_achene_ACTGCG_L006_R1_004.fastq.gz"
+#
+#SF_39_Mammoth_Cave_B8_L_2_Str_2_achene:
+# SF_39_Mammoth_Cave_B8_L_2_Str_2_achene:
+#   SF_39_Mammoth_Cave_B8_L_2_Str_2_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_39_Mammoth_Cave_B8_L_2_Str_2_achene/SF_39_Mammoth_Cave_B8_L_2_Str_2_achene_TCGATG_L006_R1_001.fastq.gz"
+#
+#SF_40_Mammoth_Cave_B6_Str_2_achene:
+# SF_40_Mammoth_Cave_B6_Str_2_achene:
+#   SF_40_Mammoth_Cave_B6_Str_2_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_40_Mammoth_Cave_B6_Str_2_achene/SF_40_Mammoth_Cave_B6_Str_2_achene_TACGAG_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_40_Mammoth_Cave_B6_Str_2_achene/SF_40_Mammoth_Cave_B6_Str_2_achene_TACGAG_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_40_Mammoth_Cave_B6_Str_2_achene/SF_40_Mammoth_Cave_B6_Str_2_achene_TACGAG_L006_R1_003.fastq.gz"
+#
+#SF_41_Edens_Bluff_32_3_95a_disk:
+# SF_41_Edens_Bluff_32_3_95a_disk:
+#   SF_41_Edens_Bluff_32_3_95a_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_41_Edens_Bluff_32_3_95a_disk/SF_41_Edens_Bluff_32_3_95a_disk_GTCGTC_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_41_Edens_Bluff_32_3_95a_disk/SF_41_Edens_Bluff_32_3_95a_disk_GTCGTC_L006_R1_002.fastq.gz"
+#
+#SF_42_Edens_Bluff_32_3_1701a_disk:
+# SF_42_Edens_Bluff_32_3_1701a_disk:
+#   SF_42_Edens_Bluff_32_3_1701a_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_42_Edens_Bluff_32_3_1701a_disk/SF_42_Edens_Bluff_32_3_1701a_disk_GCTACT_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_42_Edens_Bluff_32_3_1701a_disk/SF_42_Edens_Bluff_32_3_1701a_disk_GCTACT_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_42_Edens_Bluff_32_3_1701a_disk/SF_42_Edens_Bluff_32_3_1701a_disk_GCTACT_L006_R1_003.fastq.gz"
+#
+#SF_43_Edens_Bluff_32_3_1702_disk:
+# SF_43_Edens_Bluff_32_3_1702_disk:
+#   SF_43_Edens_Bluff_32_3_1702_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_43_Edens_Bluff_32_3_1702_disk/SF_43_Edens_Bluff_32_3_1702_disk_GAGTAG_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_43_Edens_Bluff_32_3_1702_disk/SF_43_Edens_Bluff_32_3_1702_disk_GAGTAG_L006_R1_002.fastq.gz"
+#
+#SF_45_Edens_Bluff_32_3_1702_disk:
+# SF_45_Edens_Bluff_32_3_1702_disk:
+#   SF_45_Edens_Bluff_32_3_1702_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_45_Edens_Bluff_32_3_1702_disk/SF_45_Edens_Bluff_32_3_1702_disk_ACAGAG_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_45_Edens_Bluff_32_3_1702_disk/SF_45_Edens_Bluff_32_3_1702_disk_ACAGAG_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_45_Edens_Bluff_32_3_1702_disk/SF_45_Edens_Bluff_32_3_1702_disk_ACAGAG_L006_R1_003.fastq.gz"
+#
+#SF_46_Edens_Bluff_32_3_1698_disk:
+# SF_46_Edens_Bluff_32_3_1698_disk:
+#   SF_46_Edens_Bluff_32_3_1698_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_46_Edens_Bluff_32_3_1698_disk/SF_46_Edens_Bluff_32_3_1698_disk_CTCTGC_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_46_Edens_Bluff_32_3_1698_disk/SF_46_Edens_Bluff_32_3_1698_disk_CTCTGC_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_46_Edens_Bluff_32_3_1698_disk/SF_46_Edens_Bluff_32_3_1698_disk_CTCTGC_L006_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_46_Edens_Bluff_32_3_1698_disk/SF_46_Edens_Bluff_32_3_1698_disk_CTCTGC_L006_R1_004.fastq.gz"
+#
+#SF_47_Edens_Bluff_32_3_1696b_disk:
+# SF_47_Edens_Bluff_32_3_1696b_disk:
+#   SF_47_Edens_Bluff_32_3_1696b_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_47_Edens_Bluff_32_3_1696b_disk/SF_47_Edens_Bluff_32_3_1696b_disk_TAGCTG_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_47_Edens_Bluff_32_3_1696b_disk/SF_47_Edens_Bluff_32_3_1696b_disk_TAGCTG_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_47_Edens_Bluff_32_3_1696b_disk/SF_47_Edens_Bluff_32_3_1696b_disk_TAGCTG_L006_R1_003.fastq.gz"
+#
+#SF_48_Edens_Bluff_32_3_1696a_disk:
+# SF_48_Edens_Bluff_32_3_1696a_disk:
+#   SF_48_Edens_Bluff_32_3_1696a_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_48_Edens_Bluff_32_3_1696a_disk/SF_48_Edens_Bluff_32_3_1696a_disk_CTATCA_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_48_Edens_Bluff_32_3_1696a_disk/SF_48_Edens_Bluff_32_3_1696a_disk_CTATCA_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_48_Edens_Bluff_32_3_1696a_disk/SF_48_Edens_Bluff_32_3_1696a_disk_CTATCA_L006_R1_003.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_48_Edens_Bluff_32_3_1696a_disk/SF_48_Edens_Bluff_32_3_1696a_disk_CTATCA_L006_R1_004.fastq.gz"
+#
+#SF_49_Edens_Bluff_32_3_1695_disk:
+# SF_49_Edens_Bluff_32_3_1695_disk:
+#   SF_49_Edens_Bluff_32_3_1695_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_49_Edens_Bluff_32_3_1695_disk/SF_49_Edens_Bluff_32_3_1695_disk_CGTATA_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_49_Edens_Bluff_32_3_1695_disk/SF_49_Edens_Bluff_32_3_1695_disk_CGTATA_L006_R1_002.fastq.gz"
+#
+#SF_50_Edens_Bluff_32_3_1699a_disk:
+# SF_50_Edens_Bluff_32_3_1699a_disk:
+#   SF_50_Edens_Bluff_32_3_1699a_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_50_Edens_Bluff_32_3_1699a_disk/SF_50_Edens_Bluff_32_3_1699a_disk_TGATCG_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_50_Edens_Bluff_32_3_1699a_disk/SF_50_Edens_Bluff_32_3_1699a_disk_TGATCG_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_50_Edens_Bluff_32_3_1699a_disk/SF_50_Edens_Bluff_32_3_1699a_disk_TGATCG_L006_R1_003.fastq.gz"
+#
+#SF_51_Mammoth_Cave_B11_L_2_achene:
+# SF_51_Mammoth_Cave_B11_L_2_achene:
+#   SF_51_Mammoth_Cave_B11_L_2_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_51_Mammoth_Cave_B11_L_2_achene/SF_51_Mammoth_Cave_B11_L_2_achene_GTGTAT_L006_R1_001.fastq.gz"
+#
+#SF_52_Cloudsplitter_FS2420_achene:
+# SF_52_Cloudsplitter_FS2420_achene:
+#   SF_52_Cloudsplitter_FS2420_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_52_Cloudsplitter_FS2420_achene/SF_52_Cloudsplitter_FS2420_achene_CGCTAT_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_52_Cloudsplitter_FS2420_achene/SF_52_Cloudsplitter_FS2420_achene_CGCTAT_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_52_Cloudsplitter_FS2420_achene/SF_52_Cloudsplitter_FS2420_achene_CGCTAT_L006_R1_003.fastq.gz"
+#
+#SF_53_Cloudsplitter_FS1983_achene:
+# SF_53_Cloudsplitter_FS1983_achene:
+#   SF_53_Cloudsplitter_FS1983_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_53_Cloudsplitter_FS1983_achene/SF_53_Cloudsplitter_FS1983_achene_CAGCTA_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_53_Cloudsplitter_FS1983_achene/SF_53_Cloudsplitter_FS1983_achene_CAGCTA_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_53_Cloudsplitter_FS1983_achene/SF_53_Cloudsplitter_FS1983_achene_CAGCTA_L006_R1_003.fastq.gz"
+#
+#SF_55_Cloudsplitter_Level_1_disk:
+# SF_55_Cloudsplitter_Level_1_disk:
+#   SF_55_Cloudsplitter_Level_1_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_55_Cloudsplitter_Level_1_disk/SF_55_Cloudsplitter_Level_1_disk_TGAGCC_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_55_Cloudsplitter_Level_1_disk/SF_55_Cloudsplitter_Level_1_disk_TGAGCC_L006_R1_002.fastq.gz"
+#
+#SF_56_Cloudsplitter_FS2316_perianth:
+# SF_56_Cloudsplitter_FS2316_perianth:
+#   SF_56_Cloudsplitter_FS2316_perianth:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_56_Cloudsplitter_FS2316_perianth/SF_56_Cloudsplitter_FS2316_perianth_AGCATG_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_56_Cloudsplitter_FS2316_perianth/SF_56_Cloudsplitter_FS2316_perianth_AGCATG_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_56_Cloudsplitter_FS2316_perianth/SF_56_Cloudsplitter_FS2316_perianth_AGCATG_L006_R1_003.fastq.gz"
+#
+#SF_57_Cloudsplitter_Level_2_achene:
+# SF_57_Cloudsplitter_Level_2_achene:
+#   SF_57_Cloudsplitter_Level_2_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_57_Cloudsplitter_Level_2_achene/SF_57_Cloudsplitter_Level_2_achene_CGATGA_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_57_Cloudsplitter_Level_2_achene/SF_57_Cloudsplitter_Level_2_achene_CGATGA_L006_R1_002.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_57_Cloudsplitter_Level_2_achene/SF_57_Cloudsplitter_Level_2_achene_CGATGA_L006_R1_003.fastq.gz"
+#
+#SF_58_Newt_Kash_16447_1217_disk:
+# SF_58_Newt_Kash_16447_1217_disk:
+#   SF_58_Newt_Kash_16447_1217_disk:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_58_Newt_Kash_16447_1217_disk/SF_58_Newt_Kash_16447_1217_disk_TGTGAC_L006_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_58_Newt_Kash_16447_1217_disk/SF_58_Newt_Kash_16447_1217_disk_TGTGAC_L006_R1_002.fastq.gz"
+#
+#SF_59_Newt_Kash_4000_1_10329_achene:
+# SF_59_Newt_Kash_4000_1_10329_achene:
+#   SF_59_Newt_Kash_4000_1_10329_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_59_Newt_Kash_4000_1_10329_achene/SF_59_Newt_Kash_4000_1_10329_achene_TGCATA_L006_R1_001.fastq.gz"
+#
+#SF_60_Newt_Kash_16446_1216_achene:
+# SF_60_Newt_Kash_16446_1216_achene:
+#   SF_60_Newt_Kash_16446_1216_achene:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170131_hiseq4a/Sample_SF_60_Newt_Kash_16446_1216_achene/SF_60_Newt_Kash_16446_1216_achene_TCTCGC_L006_R1_001.fastq.gz"
+#
+#SF_11c_Newt_Kash_16389_lab_1083:
+# SF_11c_Newt_Kash_16389_lab_1083:
+#   SF_11c_Newt_Kash_16389_lab_1083:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_11c_Newt_Kash_16389_lab_1083_S40_L003_R1_001.fastq.gz"
+#
+#
+#SF_35b_Cloudsplitter_15Mf36:
+# SF_35b_Cloudsplitter_15Mf36:
+#   SF_35b_Cloudsplitter_15Mf36:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_35b_Cloudsplitter_15Mf36_S41_L003_R1_001.fastq.gz"
+#
+#SF_36b_Cloudsplitter_FS2316:
+# SF_36b_Cloudsplitter_FS2316:
+#   SF_36b_Cloudsplitter_FS2316:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_36b_Cloudsplitter_FS2316_S42_L003_R1_001.fastq.gz"
+#
+#SF_36c_Cloudsplitter_FS2316:
+# SF_36c_Cloudsplitter_FS2316:
+#   SF_36c_Cloudsplitter_FS2316:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_36c_Cloudsplitter_FS2316_S43_L003_R1_001.fastq.gz"
+#
+#SF_36d_Cloudsplitter_FS2316:
+# SF_36d_Cloudsplitter_FS2316:
+#   SF_36d_Cloudsplitter_FS2316:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_36d_Cloudsplitter_FS2316_S44_L003_R1_001.fastq.gz"
+#
+#SF_37b_Cloudsplitter_Level_1:
+# SF_37b_Cloudsplitter_Level_1:
+#   SF_37b_Cloudsplitter_Level_1:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_37b_Cloudsplitter_Level_1_S45_L003_R1_001.fastq.gz"
+#
+#SF_38b_Cloudsplitter_FS2353:
+# SF_38b_Cloudsplitter_FS2353:
+#   SF_38b_Cloudsplitter_FS2353:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_38b_Cloudsplitter_FS2353_S46_L003_R1_001.fastq.gz"
+#
+#SF_63a_Bushwack_116241:
+# SF_63a_Bushwack_116241:
+#   SF_63a_Bushwack_116241:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_63a_Bushwack_116241_S67_L003_R1_001.fastq.gz"
+#
+#SF_63b_Bushwack_116241:
+# SF_63b_Bushwack_116241:
+#   SF_63b_Bushwack_116241:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_63b_Bushwack_116241_S70_L003_R1_001.fastq.gz"
+#
+#SF_64a_Bushwack_246194:
+# SF_64a_Bushwack_246194:
+#   SF_64a_Bushwack_246194:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_64a_Bushwack_246194_S68_L003_R1_001.fastq.gz"
+#
+#SF_64b_Bushwack_246194:
+# SF_64b_Bushwack_246194:
+#   SF_64b_Bushwack_246194:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_64b_Bushwack_246194_S71_L003_R1_001.fastq.gz"
+#
+#SF_65a_coat_Alred_117265:
+# SF_65a_coat_Alred_117265:
+#   SF_65a_coat_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65a_coat_Alred_117265_S47_L003_R1_001.fastq.gz"
+#
+#SF_65a_endo_Alred_117265:
+# SF_65a_endo_Alred_117265:
+#   SF_65a_endo_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65a_endo_Alred_117265_S48_L003_R1_001.fastq.gz"
+#
+SF_65b_Alred_117265:
+ SF_65b_Alred_117265:
+   SF_65b_Alred_117265:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/SF_65b_Alred_117265_S49_L003_R1_001.fastq.gz"
+#
+#SF_65c_coat_Alred_117265:
+# SF_65c_coat_Alred_117265:
+#   SF_65c_coat_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65c_coat_Alred_117265_S50_L003_R1_001.fastq.gz"
+#
+#SF_65c_endo_Alred_117265:
+# SF_65c_endo_Alred_117265:
+#   SF_65c_endo_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65c_endo_Alred_117265_S51_L003_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65c_endo_Alred_6a_S1_L001_R1_001.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65c_endo_Alred_6a_S1_L002_R1_001.fastq.gz"
+#     
+#SF_65d_Alred_117265:
+# SF_65d_Alred_117265:
+#   SF_65d_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65d_Alred_117265_S52_L003_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65d_Alred_7_S2_L001_R1_001.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65d_Alred_7_S2_L002_R1_001.fastq.gz"
+#
+SF_65e_Alred_117265:
+ SF_65e_Alred_117265:
+   SF_65e_Alred_117265:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/SF_65e_Alred_117265_S54_L003_R1_001.fastq.gz"
+     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/SF_65e_Alred_8_S3_L001_R1_001.fastq.gz"
+     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/SF_65e_Alred_8_S3_L002_R1_001.fastq.gz"
+
+SF_65f_Alred_117265:
+ SF_65f_Alred_117265:
+   SF_65f_Alred_117265:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/SF_65f_Alred_117265_S55_L003_R1_001.fastq.gz"
+     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/SF_65f_Alred_9_S4_L001_R1_001.fastq.gz"
+     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/SF_65f_Alred_9_S4_L002_R1_001.fastq.gz"
+#
+#SF_65g_coat_Alred_117265:
+# SF_65g_coat_Alred_117265:
+#   SF_65g_coat_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65g_coat_Alred_117265_S56_L003_R1_001.fastq.gz"
+#
+#SF_65g_endo_Alred_117265:
+# SF_65g_endo_Alred_117265:
+#   SF_65g_endo_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65g_endo_Alred_117265_S57_L003_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65g_endo_Alred_10a_S5_L001_R1_001.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65g_endo_Alred_10a_S5_L002_R1_001.fastq.gz"
+#
+#SF_65h_coat_Alred_117265:
+# SF_65h_coat_Alred_117265:
+#   SF_65h_coat_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65h_coat_Alred_117265_S58_L003_R1_001.fastq.gz"
+#
+#SF_65h_endo_Alred_117265:
+# SF_65h_endo_Alred_117265:
+#   SF_65h_endo_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65h_endo_Alred_117265_S59_L003_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65h_endo_Alred_11a_S6_L001_R1_001.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65h_endo_Alred_11a_S6_L002_R1_001.fastq.gz"
+#
+#SF_65i_Alred_117265_S60:
+# SF_65i_Alred_117265_S60:
+#   SF_65i_Alred_117265_S60:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65i_Alred_117265_S60_L003_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65i_Alred_12_S7_L001_R1_001.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65i_Alred_12_S7_L002_R1_001.fastq.gz"
+#
+#SF_65j_coat_Alred_117265:
+# SF_65j_coat_Alred_117265:
+#   SF_65j_coat_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65j_coat_Alred_117265_S62_L003_R1_001.fastq.gz"
+#
+#SF_65j_endo_Alred_117265:
+# SF_65j_endo_Alred_117265:
+#   SF_65j_endo_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65j_endo_Alred_117265_S63_L003_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65j_endo_Alred_13a_S8_L001_R1_001.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65j_endo_Alred_13a_S8_L002_R1_001.fastq.gz"
+#
+#SF_65k_coat_Alred_117265:
+# SF_65k_coat_Alred_117265:
+#   SF_65k_coat_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65k_coat_Alred_117265_S64_L003_R1_001.fastq.gz"
+#
+#SF_65k_endo_Alred_117265:
+# SF_65k_endo_Alred_117265:
+#   SF_65k_endo_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65k_endo_Alred_117265_S65_L003_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65k_endo_Alred_14a_S9_L001_R1_001.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65k_endo_Alred_14a_S9_L002_R1_001.fastq.gz"
+#
+#SF_65l_Alred_117265:
+# SF_65l_Alred_117265:
+#   SF_65l_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65l_Alred_117265_S66_L003_R1_001.fastq.gz"
+#
+#SF_65m_Alred_117265:
+# SF_65m_Alred_117265:
+#   SF_65m_Alred_117265:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_65m_Alred_117265_S72_L003_R1_001.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65m_Alred_16_S10_L001_R1_001.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20180209_hiseq/TOG_HCDT_SF_65m_Alred_16_S10_L002_R1_001.fastq.gz"
+#
+#
+#SF_66a_Indian_Bluff_116506:
+# SF_66a_Indian_Bluff_116506:
+#   SF_66a_Indian_Bluff_116506:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/ancient_fastq/raw_data/20170920_hiseq/SF_66a_Indian_Bluff_116506_S69_L003_R1_001.fastq.gz"
+
+
+  

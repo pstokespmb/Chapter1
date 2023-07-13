@@ -1,0 +1,315 @@
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr01_missingPositions_sorted_Chr01_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr01_missingPositions_sorted_Chr01_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr02_missingPositions_sorted_Chr02_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr02_missingPositions_sorted_Chr02_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr03_missingPositions_sorted_Chr03_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr03_missingPositions_sorted_Chr03_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr04_missingPositions_sorted_Chr04_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr04_missingPositions_sorted_Chr04_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr05_missingPositions_sorted_Chr05_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr05_missingPositions_sorted_Chr05_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr06_missingPositions_sorted_Chr06_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr06_missingPositions_sorted_Chr06_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr07_missingPositions_sorted_Chr07_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr07_missingPositions_sorted_Chr07_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr08_missingPositions_sorted_Chr08_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr08_missingPositions_sorted_Chr08_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr09_missingPositions_sorted_Chr09_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr09_missingPositions_sorted_Chr09_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr10_missingPositions_sorted_Chr10_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr10_missingPositions_sorted_Chr10_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr11_missingPositions_sorted_Chr11_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr11_missingPositions_sorted_Chr11_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr12_missingPositions_sorted_Chr12_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr12_missingPositions_sorted_Chr12_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr13_missingPositions_sorted_Chr13_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr13_missingPositions_sorted_Chr13_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr14_missingPositions_sorted_Chr14_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr14_missingPositions_sorted_Chr14_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr15_missingPositions_sorted_Chr15_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr15_missingPositions_sorted_Chr15_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr16_missingPositions_sorted_Chr16_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr16_missingPositions_sorted_Chr16_only_ExplicitMissing.bed
+awk 'BEGIN{FS=OFS="\t"} {$2 = $2 + 1}1' Chapter1_noRR_allSamples_NF_D4_Chr17_missingPositions_sorted_Chr17_only.bed > Chapter1_noRR_allSamples_NF_D4_Chr17_missingPositions_sorted_Chr17_only_ExplicitMissing.bed
+
+
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr01_missingPositions_sorted_Chr01_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr02_missingPositions_sorted_Chr02_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr03_missingPositions_sorted_Chr03_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr04_missingPositions_sorted_Chr04_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr05_missingPositions_sorted_Chr05_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr06_missingPositions_sorted_Chr06_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr07_missingPositions_sorted_Chr07_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr08_missingPositions_sorted_Chr08_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr09_missingPositions_sorted_Chr09_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr10_missingPositions_sorted_Chr10_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr11_missingPositions_sorted_Chr11_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr12_missingPositions_sorted_Chr12_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr13_missingPositions_sorted_Chr13_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr14_missingPositions_sorted_Chr14_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr15_missingPositions_sorted_Chr15_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr16_missingPositions_sorted_Chr16_only_ExplicitMissing.bed
+bgzip Chapter1_noRR_allSamples_NF_D4_Chr17_missingPositions_sorted_Chr17_only_ExplicitMissing.bed
+
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr01_missingPositions_sorted_Chr01_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr02_missingPositions_sorted_Chr02_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr03_missingPositions_sorted_Chr03_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr04_missingPositions_sorted_Chr04_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr05_missingPositions_sorted_Chr05_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr06_missingPositions_sorted_Chr06_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr07_missingPositions_sorted_Chr07_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr08_missingPositions_sorted_Chr08_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr09_missingPositions_sorted_Chr09_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr10_missingPositions_sorted_Chr10_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr11_missingPositions_sorted_Chr11_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr12_missingPositions_sorted_Chr12_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr13_missingPositions_sorted_Chr13_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr14_missingPositions_sorted_Chr14_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr15_missingPositions_sorted_Chr15_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr16_missingPositions_sorted_Chr16_only_ExplicitMissing.bed.gz
+tabix -p bed Chapter1_noRR_allSamples_NF_D4_Chr17_missingPositions_sorted_Chr17_only_ExplicitMissing.bed.gz
+
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr02_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr03_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr04_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr05_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr06_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr07_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr08_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr09_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr10_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr11_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr12_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr13_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr14_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr15_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr16_ExplicitMissing.sh
+cp 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./6_LRE_vcf2smc_Chr17_ExplicitMissing.sh
+
+gsed -i 's/Chr01/Chr02/g' 6_LRE_vcf2smc_Chr02_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr03/g' 6_LRE_vcf2smc_Chr03_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr04/g' 6_LRE_vcf2smc_Chr04_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr05/g' 6_LRE_vcf2smc_Chr05_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr06/g' 6_LRE_vcf2smc_Chr06_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr07/g' 6_LRE_vcf2smc_Chr07_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr08/g' 6_LRE_vcf2smc_Chr08_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr09/g' 6_LRE_vcf2smc_Chr09_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr10/g' 6_LRE_vcf2smc_Chr10_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr11/g' 6_LRE_vcf2smc_Chr11_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr12/g' 6_LRE_vcf2smc_Chr12_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr13/g' 6_LRE_vcf2smc_Chr13_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr14/g' 6_LRE_vcf2smc_Chr14_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr15/g' 6_LRE_vcf2smc_Chr15_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr16/g' 6_LRE_vcf2smc_Chr16_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr17/g' 6_LRE_vcf2smc_Chr17_ExplicitMissing.sh
+
+sbatch 6_LRE_vcf2smc_Chr01_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr02_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr03_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr04_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr05_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr06_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr07_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr08_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr09_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr10_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr11_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr12_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr13_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr14_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr15_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr16_ExplicitMissing.sh
+sbatch 6_LRE_vcf2smc_Chr17_ExplicitMissing.sh
+
+
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr02_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr03_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr04_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr05_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr06_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr07_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr08_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr09_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr10_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr11_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr12_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr13_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr14_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr15_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr16_ExplicitMissing.sh
+cp 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh ./7_LRE_vcf2smc_Chr17_ExplicitMissing.sh
+
+gsed -i 's/Chr01/Chr02/g' 7_LRE_vcf2smc_Chr02_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr03/g' 7_LRE_vcf2smc_Chr03_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr04/g' 7_LRE_vcf2smc_Chr04_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr05/g' 7_LRE_vcf2smc_Chr05_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr06/g' 7_LRE_vcf2smc_Chr06_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr07/g' 7_LRE_vcf2smc_Chr07_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr08/g' 7_LRE_vcf2smc_Chr08_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr09/g' 7_LRE_vcf2smc_Chr09_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr10/g' 7_LRE_vcf2smc_Chr10_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr11/g' 7_LRE_vcf2smc_Chr11_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr12/g' 7_LRE_vcf2smc_Chr12_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr13/g' 7_LRE_vcf2smc_Chr13_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr14/g' 7_LRE_vcf2smc_Chr14_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr15/g' 7_LRE_vcf2smc_Chr15_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr16/g' 7_LRE_vcf2smc_Chr16_ExplicitMissing.sh
+gsed -i 's/Chr01/Chr17/g' 7_LRE_vcf2smc_Chr17_ExplicitMissing.sh
+
+sbatch 7_LRE_vcf2smc_Chr01_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr02_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr03_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr04_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr05_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr06_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr07_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr08_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr09_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr10_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr11_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr12_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr13_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr14_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr15_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr16_ExplicitMissing.sh
+sbatch 7_LRE_vcf2smc_Chr17_ExplicitMissing.sh
+
+
+module load python
+
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py 
+
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr01_noMask.smc LRE_Arikara_Chr01_noMask_Fixed.smc
+
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr07_noMask.smc LRE_Hopi_mapping_NEW_Chr07_noMask_Fixed.smc
+
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr13_noMask.smc LRE_Hopi_real_NEW_Chr13_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr02_noMask.smc LRE_Mandan1_PPN046_Chr02_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr08_noMask.smc LRE_Mandan2_Chr08_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr14_noMask.smc LRE_Pueblo_Chr14_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr02_noMask.smc LRE_Arikara_Chr02_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr08_noMask.smc LRE_Hopi_mapping_NEW_Chr08_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr14_noMask.smc LRE_Hopi_real_NEW_Chr14_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr03_noMask.smc LRE_Mandan1_PPN046_Chr03_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr09_noMask.smc LRE_Mandan2_Chr09_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr15_noMask.smc LRE_Pueblo_Chr15_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr03_noMask.smc LRE_Arikara_Chr03_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr09_noMask.smc LRE_Hopi_mapping_NEW_Chr09_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr15_noMask.smc LRE_Hopi_real_NEW_Chr15_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr04_noMask.smc LRE_Mandan1_PPN046_Chr04_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr10_noMask.smc LRE_Mandan2_Chr10_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr16_noMask.smc LRE_Pueblo_Chr16_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr04_noMask.smc LRE_Arikara_Chr04_noMask_Fixed.smc
+
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr10_noMask.smc LRE_Hopi_mapping_NEW_Chr10_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr16_noMask.smc LRE_Hopi_real_NEW_Chr16_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr05_noMask.smc LRE_Mandan1_PPN046_Chr05_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr11_noMask.smc LRE_Mandan2_Chr11_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr17_noMask.smc LRE_Pueblo_Chr17_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr05_noMask.smc LRE_Arikara_Chr05_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr11_noMask.smc LRE_Hopi_mapping_NEW_Chr11_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr17_noMask.smc LRE_Hopi_real_NEW_Chr17_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr06_noMask.smc LRE_Mandan1_PPN046_Chr06_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr12_noMask.smc LRE_Mandan2_Chr12_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr01_noMask.smc LRE_Zuni_Chr01_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr06_noMask.smc LRE_Arikara_Chr06_noMask_Fixed.smc
+
+
+
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr12_noMask.smc LRE_Hopi_mapping_NEW_Chr12_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr01_noMask.smc LRE_Laguna_Pueblo_Chr01_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr07_noMask.smc LRE_Mandan1_PPN046_Chr07_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr13_noMask.smc LRE_Mandan2_Chr13_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr02_noMask.smc LRE_Zuni_Chr02_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr07_noMask.smc LRE_Arikara_Chr07_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr13_noMask.smc LRE_Hopi_mapping_NEW_Chr13_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr02_noMask.smc LRE_Laguna_Pueblo_Chr02_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr08_noMask.smc LRE_Mandan1_PPN046_Chr08_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr14_noMask.smc LRE_Mandan2_Chr14_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr03_noMask.smc LRE_Zuni_Chr03_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr08_noMask.smc LRE_Arikara_Chr08_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr14_noMask.smc LRE_Hopi_mapping_NEW_Chr14_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr03_noMask.smc LRE_Laguna_Pueblo_Chr03_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr09_noMask.smc LRE_Mandan1_PPN046_Chr09_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr15_noMask.smc LRE_Mandan2_Chr15_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr04_noMask.smc LRE_Zuni_Chr04_noMask_Fixed.smc
+
+
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr09_noMask.smc LRE_Arikara_Chr09_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr15_noMask.smc LRE_Hopi_mapping_NEW_Chr15_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr04_noMask.smc LRE_Laguna_Pueblo_Chr04_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr10_noMask.smc LRE_Mandan1_PPN046_Chr10_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr16_noMask.smc LRE_Mandan2_Chr16_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr05_noMask.smc LRE_Zuni_Chr05_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr10_noMask.smc LRE_Arikara_Chr10_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr16_noMask.smc LRE_Hopi_mapping_NEW_Chr16_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr05_noMask.smc LRE_Laguna_Pueblo_Chr05_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr11_noMask.smc LRE_Mandan1_PPN046_Chr11_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr17_noMask.smc LRE_Mandan2_Chr17_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr06_noMask.smc LRE_Zuni_Chr06_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr11_noMask.smc LRE_Arikara_Chr11_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr17_noMask.smc LRE_Hopi_mapping_NEW_Chr17_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr06_noMask.smc LRE_Laguna_Pueblo_Chr06_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr12_noMask.smc LRE_Mandan1_PPN046_Chr12_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr01_noMask.smc LRE_Pueblo_Chr01_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr07_noMask.smc LRE_Zuni_Chr07_noMask_Fixed.smc
+
+
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr12_noMask.smc LRE_Arikara_Chr12_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr01_noMask.smc LRE_Hopi_real_NEW_Chr01_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr07_noMask.smc LRE_Laguna_Pueblo_Chr07_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr13_noMask.smc LRE_Mandan1_PPN046_Chr13_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr02_noMask.smc LRE_Pueblo_Chr02_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr08_noMask.smc LRE_Zuni_Chr08_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr13_noMask.smc LRE_Arikara_Chr13_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr02_noMask.smc LRE_Hopi_real_NEW_Chr02_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr08_noMask.smc LRE_Laguna_Pueblo_Chr08_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr14_noMask.smc LRE_Mandan1_PPN046_Chr14_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr03_noMask.smc LRE_Pueblo_Chr03_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr09_noMask.smc LRE_Zuni_Chr09_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr14_noMask.smc LRE_Arikara_Chr14_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr03_noMask.smc LRE_Hopi_real_NEW_Chr03_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr09_noMask.smc LRE_Laguna_Pueblo_Chr09_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr15_noMask.smc LRE_Mandan1_PPN046_Chr15_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr04_noMask.smc LRE_Pueblo_Chr04_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr10_noMask.smc LRE_Zuni_Chr10_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr15_noMask.smc LRE_Arikara_Chr15_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr04_noMask.smc LRE_Hopi_real_NEW_Chr04_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr10_noMask.smc LRE_Laguna_Pueblo_Chr10_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr16_noMask.smc LRE_Mandan1_PPN046_Chr16_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr05_noMask.smc LRE_Pueblo_Chr05_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr11_noMask.smc LRE_Zuni_Chr11_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr16_noMask.smc LRE_Arikara_Chr16_noMask_Fixed.smc
+
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr05_noMask.smc LRE_Hopi_real_NEW_Chr05_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr11_noMask.smc LRE_Laguna_Pueblo_Chr11_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr17_noMask.smc LRE_Mandan1_PPN046_Chr17_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr06_noMask.smc LRE_Pueblo_Chr06_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr12_noMask.smc LRE_Zuni_Chr12_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Arikara_Chr17_noMask.smc LRE_Arikara_Chr17_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr06_noMask.smc LRE_Hopi_real_NEW_Chr06_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr12_noMask.smc LRE_Laguna_Pueblo_Chr12_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr01_noMask.smc LRE_Mandan2_Chr01_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr07_noMask.smc LRE_Pueblo_Chr07_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr13_noMask.smc LRE_Zuni_Chr13_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr01_noMask.smc LRE_Hopi_mapping_NEW_Chr01_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr07_noMask.smc LRE_Hopi_real_NEW_Chr07_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr13_noMask.smc LRE_Laguna_Pueblo_Chr13_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr02_noMask.smc LRE_Mandan2_Chr02_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr08_noMask.smc LRE_Pueblo_Chr08_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr14_noMask.smc LRE_Zuni_Chr14_noMask_Fixed.smc
+
+
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr02_noMask.smc LRE_Hopi_mapping_NEW_Chr02_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr08_noMask.smc LRE_Hopi_real_NEW_Chr08_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr14_noMask.smc LRE_Laguna_Pueblo_Chr14_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr03_noMask.smc LRE_Mandan2_Chr03_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr09_noMask.smc LRE_Pueblo_Chr09_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr15_noMask.smc LRE_Zuni_Chr15_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr03_noMask.smc LRE_Hopi_mapping_NEW_Chr03_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr09_noMask.smc LRE_Hopi_real_NEW_Chr09_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr15_noMask.smc LRE_Laguna_Pueblo_Chr15_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr04_noMask.smc LRE_Mandan2_Chr04_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr10_noMask.smc LRE_Pueblo_Chr10_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr16_noMask.smc LRE_Zuni_Chr16_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr04_noMask.smc LRE_Hopi_mapping_NEW_Chr04_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr10_noMask.smc LRE_Hopi_real_NEW_Chr10_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr16_noMask.smc LRE_Laguna_Pueblo_Chr16_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr05_noMask.smc LRE_Mandan2_Chr05_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr11_noMask.smc LRE_Pueblo_Chr11_noMask_Fixed.smc
+
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Zuni_Chr17_noMask.smc LRE_Zuni_Chr17_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr05_noMask.smc LRE_Hopi_mapping_NEW_Chr05_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr11_noMask.smc LRE_Hopi_real_NEW_Chr11_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Laguna_Pueblo_Chr17_noMask.smc LRE_Laguna_Pueblo_Chr17_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr06_noMask.smc LRE_Mandan2_Chr06_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr12_noMask.smc LRE_Pueblo_Chr12_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_mapping_NEW_Chr06_noMask.smc LRE_Hopi_mapping_NEW_Chr06_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Hopi_real_NEW_Chr12_noMask.smc LRE_Hopi_real_NEW_Chr12_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan1_PPN046_Chr01_noMask.smc LRE_Mandan1_PPN046_Chr01_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Mandan2_Chr07_noMask.smc LRE_Mandan2_Chr07_noMask_Fixed.smc
+python /global/scratch/users/peter_stokes/Chapter1/smcpp/2023/scripts/vcf2smc/smcFixer.py LRE_Pueblo_Chr13_noMask.smc LRE_Pueblo_Chr13_noMask_Fixed.smc

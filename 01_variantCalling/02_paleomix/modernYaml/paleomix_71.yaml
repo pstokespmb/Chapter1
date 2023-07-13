@@ -1,0 +1,415 @@
+# -*- mode: Yaml; -*-
+# Default options.
+# Can also be specific for a set of samples, libraries, and lanes,
+# by including the "Options" hierarchy at the same level as those
+# samples, libraries, or lanes below.
+Options:
+  # Sequencing platform, see SAM/BAM reference for valid values
+  Platform: Illumina
+  # Quality offset for Phred scores, either 33 (Sanger/Illumina 1.8+)
+  # or 64 (Illumina 1.3+ / 1.5+). For Bowtie2 it is also possible to
+  # specify 'Solexa', to handle reads on the Solexa scale. This is
+  # used during adapter-trimming and sequence alignment
+  QualityOffset: 33
+
+  # Settings for trimming of reads, see AdapterRemoval man-page
+  AdapterRemoval:
+     # Set and uncomment to override defaults adapter sequences
+#     --adapter1: AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG
+#     --adapter2: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
+     # Some BAM pipeline defaults differ from AR defaults;
+     # To override, change these value(s):
+     --mm: 3
+     --minlength: 25
+     # Extra features enabled by default; change 'yes' to 'no' to disable
+     --collapse: yes
+     --trimns: yes
+     --trimqualities: yes
+     # Increase the maximum Phred allowed for input FASTQs, as well as for merged bases
+     # when using --collapse (default = 41). This is needed for some modern FASTQs.
+     #--qualitymax: 42
+
+  # Settings for aligners supported by the pipeline
+  Aligners:
+    # Choice of aligner software to use, either "BWA" or "Bowtie2"
+    Program: BWA
+
+    # Settings for mappings performed using BWA
+    BWA:
+      # One of "backtrack", "bwasw", or "mem"; see the BWA documentation
+      # for a description of each algorithm (defaults to 'backtrack')
+      Algorithm: mem
+      # Filter aligned reads with a mapping quality (Phred) below this value
+      MinQuality: 0
+      # Filter reads that did not map to the reference sequence
+      FilterUnmappedReads: yes
+      # May be disabled ("no") for aDNA alignments with the 'aln' algorithm.
+      # Post-mortem damage localizes to the seed region, which BWA expects to
+      # have few errors (sets "-l"). See http://pmid.us/22574660
+      UseSeed: yes
+      # Additional command-line options may be specified below. For 'backtrack' these
+      # are applied to the "bwa aln". See Bowtie2 for more examples.
+#      -n: 0.04
+
+    # Settings for mappings performed using Bowtie2
+    Bowtie2:
+      # Filter aligned reads with a mapping quality (Phred) below this value
+      MinQuality: 0
+      # Filter reads that did not map to the reference sequence
+      FilterUnmappedReads: yes
+      # Examples of how to add additional command-line options
+#      --trim5: 5
+#      --trim3: 5
+      # Note that the colon is required, even if no value is specified
+      --very-sensitive:
+      # Example of how to specify multiple values for an option
+#      --rg:
+#        - CN:SequencingCenterNameHere
+#        - DS:DescriptionOfReadGroup
+
+  # Command-line options for mapDamage; use long-form options(--length not -l):
+#  mapDamage:
+#    # By default, the pipeline will downsample the input to 100k hits
+#    # when running mapDamage; remove to use all hits
+#    --downsample: 100000
+
+  # Set to 'yes' exclude a type of trimmed reads from alignment / analysis;
+  # possible read-types reflect the output of AdapterRemoval
+  ExcludeReads:
+    # Exclude single-end reads (yes / no)?
+    Single: no
+    # Exclude non-collapsed paired-end reads (yes / no)?
+    Paired: no
+    # Exclude paired-end reads for which the mate was discarded (yes / no)?
+    Singleton: no
+    # Exclude overlapping paired-ended reads collapsed into a single sequence
+    # by AdapterRemoval (yes / no)?
+    Collapsed: no
+    # Like 'Collapsed', but only for collapsed reads truncated due to the
+    # presence of ambiguous or low quality bases at read termini (yes / no).
+    CollapsedTruncated: no
+
+  # Optional steps to perform during processing.
+  Features:
+    # If set to 'filter', PCR duplicates are removed from the output files; if set to
+    # 'mark', PCR duplicates are flagged with bit 0x400, and not removed from the
+    # output files; if set to 'no', the reads are assumed to not have been amplified.
+    PCRDuplicates: filter
+    # Set to 'no' to disable mapDamage; set to 'plots' to build basic mapDamage plots;
+    # set to 'model' to build plots and post-mortem damage models; and set to 'rescale'
+    # to build plots, models, and BAMs with rescaled quality scores. All analyses are
+    # carried out per library.
+    mapDamage: no
+    # Generate coverage information for the final BAM and for each 'RegionsOfInterest'
+    # specified in 'Prefixes' (yes / no).
+    Coverage: yes
+    # Generate histograms of number of sites with a given read-depth, from 0 to 200,
+    # for each BAM and for each 'RegionsOfInterest' specified in 'Prefixes' (yes / no).
+    Depths: yes
+    # Generate summary table for each target (yes / no)
+    Summary: yes
+
+
+Prefixes:
+  # Replace 'NAME_OF_PREFIX' with name of the prefix; this name
+  # is used in summary statistics and as part of output filenames.
+
+  XRQ_nuclear:
+    # Replace 'PATH_TO_PREFIX' with the path to .fasta file containing the
+    # references against which reads are to be mapped. Using the same name
+    # as filename is strongly recommended (e.g. /path/to/Human_g1k_v37.fasta
+    # should be named 'Human_g1k_v37').
+    Path: "/global/scratch/users/peter_stokes/references/HanXRQr2.0-SUNRISE-2.1.genome.genomeONLY.fasta"
+
+    # (Optional) Uncomment and replace 'PATH_TO_BEDFILE' with the path to a
+    # .bed file listing extra regions for which coverage / depth statistics
+    # should be calculated; if no names are specified for the BED records,
+    # results are named after the chromosome / contig. Change 'NAME' to the
+    # name to be used in summary statistics and output filenames.
+#    RegionsOfInterest:
+#      Annotation: "path/file.bed"
+#      Important_Genes: "path/file.bed"
+
+  Plastome:
+    # Replace 'PATH_TO_PREFIX' with the path to .fasta file containing the
+    # references against which reads are to be mapped. Using the same name
+    # as filename is strongly recommended (e.g. /path/to/Human_g1k_v37.fasta
+    # should be named 'Human_g1k_v37').
+    Path: "/global/scratch/users/peter_stokes/references/HanXRQr2.0-SUNRISE-2.1.genome.CP.fasta"
+
+  Mito:
+    # Replace 'PATH_TO_PREFIX' with the path to .fasta file containing the
+    # references against which reads are to be mapped. Using the same name
+    # as filename is strongly recommended (e.g. /path/to/Human_g1k_v37.fasta
+    # should be named 'Human_g1k_v37').
+    Path: "/global/scratch/users/peter_stokes/references/HanXRQr2.0-SUNRISE-2.1.genome.MT.fasta"
+
+# Mapping targets are specified using the following structure. Replace 'NAME_OF_TARGET'
+# with the desired prefix for filenames.
+
+
+#ANN0820:
+# ANN0820:
+#   ANN0820:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888482_{Pair}.fastq.gz"
+#
+#ANN0867:
+# ANN0867:
+#   ANN0867:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888926_{Pair}.fastq.gz"
+#
+#ANN0880:
+# ANN0880:
+#   ANN0880:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888524_{Pair}.fastq.gz"
+#
+#ANN0927:
+# ANN0927:
+#   ANN0927:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888944_{Pair}.fastq.gz"
+#
+#ANN0946:
+# ANN0946:
+#   ANN0946:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888534_{Pair}.fastq.gz"
+#
+#ANN0964:
+# ANN0964:
+#   ANN0964:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888850_{Pair}.fastq.gz"
+#
+#ANN0972:
+# ANN0972:
+#   ANN0972:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888708_{Pair}.fastq.gz"
+#
+#ANN0978:
+# ANN0978:
+#   ANN0978:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888892_{Pair}.fastq.gz"
+#
+#ANN0981:
+# ANN0981:
+#   ANN0981:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888895_{Pair}.fastq.gz"
+#
+#ANN0992:
+# ANN0992:
+#   ANN0992:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888914_{Pair}.fastq.gz"
+#
+#ANN1003:
+# ANN1003:
+#   ANN1003:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888642_{Pair}.fastq.gz"
+#
+#ANN1004:
+# ANN1004:
+#   ANN1004:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888645_{Pair}.fastq.gz"
+#
+#ANN1040:
+# ANN1040:
+#   ANN1040:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888827_{Pair}.fastq.gz"
+#
+#ANN1062:
+# ANN1062:
+#   ANN1062:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888974_{Pair}.fastq.gz"
+#
+#ANN1073:
+# ANN1073:
+#   ANN1073:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888814_{Pair}.fastq.gz"
+#
+#ANN1160:
+# ANN1160:
+#   ANN1160:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888483_{Pair}.fastq.gz"
+#
+#SK1W_37:
+# SK1W_37:
+#   SK1W_37:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940308_{Pair}.fastq.gz"
+#
+#ANN1164:
+# ANN1164:
+#   ANN1164:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888917_{Pair}.fastq.gz"
+#
+#ANN1178:
+# ANN1178:
+#   ANN1178:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888730_{Pair}.fastq.gz"
+#
+#ANN1187:
+# ANN1187:
+#   ANN1187:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888617_{Pair}.fastq.gz"
+#
+#ANN1188:
+# ANN1188:
+#   ANN1188:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888616_{Pair}.fastq.gz"
+#
+#ANN1216:
+# ANN1216:
+#   ANN1216:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892487_{Pair}.fastq.gz"
+#
+#ANN1219:
+# ANN1219:
+#   ANN1219:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892473_{Pair}.fastq.gz"
+#
+#ANN1297:
+# ANN1297:
+#   ANN1297:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892451_{Pair}.fastq.gz"
+#
+#ANN1300:
+# ANN1300:
+#   ANN1300:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892454_{Pair}.fastq.gz"
+#
+#ANN1268:
+# ANN1268:
+#   ANN1268:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892404_{Pair}.fastq.gz"
+#
+#ANN1273:
+# ANN1273:
+#   ANN1273:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892704_{Pair}.fastq.gz"
+#
+#ANN1284:
+# ANN1284:
+#   ANN1284:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892374_{Pair}.fastq.gz"
+#
+#ANN1316:
+# ANN1316:
+#   ANN1316:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892639_{Pair}.fastq.gz"
+#
+#ANN1319:
+# ANN1319:
+#   ANN1319:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892448_{Pair}.fastq.gz"
+#
+#ANN1322:
+# ANN1322:
+#   ANN1322:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892730_{Pair}.fastq.gz"
+#
+#IA2W_38:
+# IA2W_38:
+#   IA2W_38:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940312_{Pair}.fastq.gz"
+#
+#MB1W_16:
+# MB1W_16:
+#   MB1W_16:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940397_{Pair}.fastq.gz"
+#
+#MB1W_16B:
+# MB1W_16B:
+#   MB1W_16B:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940401_{Pair}.fastq.gz"
+#
+#SD1W_15:
+# SD1W_15:
+#   SD1W_15:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940477_{Pair}.fastq.gz"
+#
+#SD1W_35:
+# SD1W_35:
+#   SD1W_35:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940174_{Pair}.fastq.gz"
+#
+#SD1W_4:
+# SD1W_4:
+#   SD1W_4:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940366_{Pair}.fastq.gz"
+#
+#SD2W_18:
+# SD2W_18:
+#   SD2W_18:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940375_{Pair}.fastq.gz"
+#
+#ND1W_31:
+# ND1W_31:
+#   ND1W_31:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940306_{Pair}.fastq.gz"
+#
+#SD2W_23R:
+# SD2W_23R:
+#   SD2W_23R:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940094_{Pair}.fastq.gz"
+#
+KS1W_27:
+ KS1W_27:
+   KS1W_27:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940234_{Pair}.fastq.gz"
+
+MB1W_8:
+ MB1W_8:
+   MB1W_8:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940318_{Pair}.fastq.gz"
+
+MO1W_3:
+ MO1W_3:
+   MO1W_3:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940427_{Pair}.fastq.gz"
+
+MO1W_33:
+ MO1W_33:
+   MO1W_33:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940376_{Pair}.fastq.gz"
+
+
+ANN0908:
+ ANN0908:
+   ANN0908:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888809_{Pair}.fastq.gz"
+     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888807_{Pair}.fastq.gz"
+     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888808_{Pair}.fastq.gz"
+#
+#ANN0985:
+# ANN0985:
+#   ANN0985:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888547_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888873_{Pair}.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888514_{Pair}.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888603_{Pair}.fastq.gz"
+#
+#ANN0986:
+# ANN0986:
+#   ANN0986:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888601_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888602_{Pair}.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888599_{Pair}.fastq.gz"
+#     Lane4: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888600_{Pair}.fastq.gz"
+#
+#ANN1011:
+# ANN1011:
+#   ANN1011:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888922_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888923_{Pair}.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888654_{Pair}.fastq.gz"
+#
+#ANN1095:
+# ANN1095:
+#   ANN1095:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888574_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8889024_{Pair}.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888784_{Pair}.fastq.gz"
+#
+#ANN1134:
+# ANN1134:
+#   ANN1134:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888764_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888802_{Pair}.fastq.gz"
+#     Lane3: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888803_{Pair}.fastq.gz"
+#

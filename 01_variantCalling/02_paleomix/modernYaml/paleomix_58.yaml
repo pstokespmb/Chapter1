@@ -1,0 +1,583 @@
+# -*- mode: Yaml; -*-
+# Default options.
+# Can also be specific for a set of samples, libraries, and lanes,
+# by including the "Options" hierarchy at the same level as those
+# samples, libraries, or lanes below.
+Options:
+  # Sequencing platform, see SAM/BAM reference for valid values
+  Platform: Illumina
+  # Quality offset for Phred scores, either 33 (Sanger/Illumina 1.8+)
+  # or 64 (Illumina 1.3+ / 1.5+). For Bowtie2 it is also possible to
+  # specify 'Solexa', to handle reads on the Solexa scale. This is
+  # used during adapter-trimming and sequence alignment
+  QualityOffset: 33
+
+  # Settings for trimming of reads, see AdapterRemoval man-page
+  AdapterRemoval:
+     # Set and uncomment to override defaults adapter sequences
+#     --adapter1: AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG
+#     --adapter2: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
+     # Some BAM pipeline defaults differ from AR defaults;
+     # To override, change these value(s):
+     --mm: 3
+     --minlength: 25
+     # Extra features enabled by default; change 'yes' to 'no' to disable
+     --collapse: yes
+     --trimns: yes
+     --trimqualities: yes
+     # Increase the maximum Phred allowed for input FASTQs, as well as for merged bases
+     # when using --collapse (default = 41). This is needed for some modern FASTQs.
+     #--qualitymax: 42
+
+  # Settings for aligners supported by the pipeline
+  Aligners:
+    # Choice of aligner software to use, either "BWA" or "Bowtie2"
+    Program: BWA
+
+    # Settings for mappings performed using BWA
+    BWA:
+      # One of "backtrack", "bwasw", or "mem"; see the BWA documentation
+      # for a description of each algorithm (defaults to 'backtrack')
+      Algorithm: mem
+      # Filter aligned reads with a mapping quality (Phred) below this value
+      MinQuality: 0
+      # Filter reads that did not map to the reference sequence
+      FilterUnmappedReads: yes
+      # May be disabled ("no") for aDNA alignments with the 'aln' algorithm.
+      # Post-mortem damage localizes to the seed region, which BWA expects to
+      # have few errors (sets "-l"). See http://pmid.us/22574660
+      UseSeed: yes
+      # Additional command-line options may be specified below. For 'backtrack' these
+      # are applied to the "bwa aln". See Bowtie2 for more examples.
+#      -n: 0.04
+
+    # Settings for mappings performed using Bowtie2
+    Bowtie2:
+      # Filter aligned reads with a mapping quality (Phred) below this value
+      MinQuality: 0
+      # Filter reads that did not map to the reference sequence
+      FilterUnmappedReads: yes
+      # Examples of how to add additional command-line options
+#      --trim5: 5
+#      --trim3: 5
+      # Note that the colon is required, even if no value is specified
+      --very-sensitive:
+      # Example of how to specify multiple values for an option
+#      --rg:
+#        - CN:SequencingCenterNameHere
+#        - DS:DescriptionOfReadGroup
+
+  # Command-line options for mapDamage; use long-form options(--length not -l):
+#  mapDamage:
+#    # By default, the pipeline will downsample the input to 100k hits
+#    # when running mapDamage; remove to use all hits
+#    --downsample: 100000
+
+  # Set to 'yes' exclude a type of trimmed reads from alignment / analysis;
+  # possible read-types reflect the output of AdapterRemoval
+  ExcludeReads:
+    # Exclude single-end reads (yes / no)?
+    Single: no
+    # Exclude non-collapsed paired-end reads (yes / no)?
+    Paired: no
+    # Exclude paired-end reads for which the mate was discarded (yes / no)?
+    Singleton: no
+    # Exclude overlapping paired-ended reads collapsed into a single sequence
+    # by AdapterRemoval (yes / no)?
+    Collapsed: no
+    # Like 'Collapsed', but only for collapsed reads truncated due to the
+    # presence of ambiguous or low quality bases at read termini (yes / no).
+    CollapsedTruncated: no
+
+  # Optional steps to perform during processing.
+  Features:
+    # If set to 'filter', PCR duplicates are removed from the output files; if set to
+    # 'mark', PCR duplicates are flagged with bit 0x400, and not removed from the
+    # output files; if set to 'no', the reads are assumed to not have been amplified.
+    PCRDuplicates: filter
+    # Set to 'no' to disable mapDamage; set to 'plots' to build basic mapDamage plots;
+    # set to 'model' to build plots and post-mortem damage models; and set to 'rescale'
+    # to build plots, models, and BAMs with rescaled quality scores. All analyses are
+    # carried out per library.
+    mapDamage: no
+    # Generate coverage information for the final BAM and for each 'RegionsOfInterest'
+    # specified in 'Prefixes' (yes / no).
+    Coverage: yes
+    # Generate histograms of number of sites with a given read-depth, from 0 to 200,
+    # for each BAM and for each 'RegionsOfInterest' specified in 'Prefixes' (yes / no).
+    Depths: yes
+    # Generate summary table for each target (yes / no)
+    Summary: yes
+
+
+Prefixes:
+  # Replace 'NAME_OF_PREFIX' with name of the prefix; this name
+  # is used in summary statistics and as part of output filenames.
+
+  XRQ_nuclear:
+    # Replace 'PATH_TO_PREFIX' with the path to .fasta file containing the
+    # references against which reads are to be mapped. Using the same name
+    # as filename is strongly recommended (e.g. /path/to/Human_g1k_v37.fasta
+    # should be named 'Human_g1k_v37').
+    Path: "/global/scratch/users/peter_stokes/references/HanXRQr2.0-SUNRISE-2.1.genome.genomeONLY.fasta"
+
+    # (Optional) Uncomment and replace 'PATH_TO_BEDFILE' with the path to a
+    # .bed file listing extra regions for which coverage / depth statistics
+    # should be calculated; if no names are specified for the BED records,
+    # results are named after the chromosome / contig. Change 'NAME' to the
+    # name to be used in summary statistics and output filenames.
+#    RegionsOfInterest:
+#      Annotation: "path/file.bed"
+#      Important_Genes: "path/file.bed"
+
+  Plastome:
+    # Replace 'PATH_TO_PREFIX' with the path to .fasta file containing the
+    # references against which reads are to be mapped. Using the same name
+    # as filename is strongly recommended (e.g. /path/to/Human_g1k_v37.fasta
+    # should be named 'Human_g1k_v37').
+    Path: "/global/scratch/users/peter_stokes/references/HanXRQr2.0-SUNRISE-2.1.genome.CP.fasta"
+
+  Mito:
+    # Replace 'PATH_TO_PREFIX' with the path to .fasta file containing the
+    # references against which reads are to be mapped. Using the same name
+    # as filename is strongly recommended (e.g. /path/to/Human_g1k_v37.fasta
+    # should be named 'Human_g1k_v37').
+    Path: "/global/scratch/users/peter_stokes/references/HanXRQr2.0-SUNRISE-2.1.genome.MT.fasta"
+
+# Mapping targets are specified using the following structure. Replace 'NAME_OF_TARGET'
+# with the desired prefix for filenames.
+
+
+#ANN0810:
+# ANN0810:
+#   ANN0810:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888938_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888939_{Pair}.fastq.gz"
+#
+#ANN0830:
+# ANN0830:
+#   ANN0830:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888685_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888686_{Pair}.fastq.gz"
+#
+#ANN0835:
+# ANN0835:
+#   ANN0835:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888688_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888689_{Pair}.fastq.gz"
+#
+#ANN0849:
+# ANN0849:
+#   ANN0849:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888633_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8889037_{Pair}.fastq.gz"
+#
+#ANN0854:
+# ANN0854:
+#   ANN0854:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888583_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888754_{Pair}.fastq.gz"
+#
+#ANN0874:
+# ANN0874:
+#   ANN0874:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888849_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888874_{Pair}.fastq.gz"
+#
+#ANN0882:
+# ANN0882:
+#   ANN0882:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888527_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888673_{Pair}.fastq.gz"
+#
+#ANN0898:
+# ANN0898:
+#   ANN0898:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8889028_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8889031_{Pair}.fastq.gz"
+#
+#ANN0918:
+# ANN0918:
+#   ANN0918:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888587_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888860_{Pair}.fastq.gz"
+#
+#ANN0931:
+# ANN0931:
+#   ANN0931:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888756_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888782_{Pair}.fastq.gz"
+#
+#ANN0956:
+# ANN0956:
+#   ANN0956:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888664_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888665_{Pair}.fastq.gz"
+#
+#ANN0957:
+# ANN0957:
+#   ANN0957:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888663_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888695_{Pair}.fastq.gz"
+#
+#ANN0959:
+# ANN0959:
+#   ANN0959:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888692_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888693_{Pair}.fastq.gz"
+#
+#ANN0962:
+# ANN0962:
+#   ANN0962:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888854_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888855_{Pair}.fastq.gz"
+#
+#ANN0963:
+# ANN0963:
+#   ANN0963:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888852_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888853_{Pair}.fastq.gz"
+#
+#ANN0975:
+# ANN0975:
+#   ANN0975:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888682_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888709_{Pair}.fastq.gz"
+#
+#ANN0996:
+# ANN0996:
+#   ANN0996:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888951_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888956_{Pair}.fastq.gz"
+#
+#ANN0997:
+# ANN0997:
+#   ANN0997:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888774_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888613_{Pair}.fastq.gz"
+#
+#ANN1002:
+# ANN1002:
+#   ANN1002:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888640_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888643_{Pair}.fastq.gz"
+#
+#ANN1012:
+# ANN1012:
+#   ANN1012:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888653_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888565_{Pair}.fastq.gz"
+#
+#ANN1019:
+# ANN1019:
+#   ANN1019:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888993_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888992_{Pair}.fastq.gz"
+#
+#ANN1029:
+# ANN1029:
+#   ANN1029:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888604_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888605_{Pair}.fastq.gz"
+#
+#ANN1046:
+# ANN1046:
+#   ANN1046:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888556_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888555_{Pair}.fastq.gz"
+#
+#ANN1053:
+# ANN1053:
+#   ANN1053:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888540_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888541_{Pair}.fastq.gz"
+#
+#ANN1083:
+# ANN1083:
+#   ANN1083:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888646_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888649_{Pair}.fastq.gz"
+#
+#ANN1106:
+# ANN1106:
+#   ANN1106:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888679_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888680_{Pair}.fastq.gz"
+#
+#ANN1115:
+# ANN1115:
+#   ANN1115:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888519_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888520_{Pair}.fastq.gz"
+#
+#ANN1127:
+# ANN1127:
+#   ANN1127:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888509_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888510_{Pair}.fastq.gz"
+#
+#ANN1143:
+# ANN1143:
+#   ANN1143:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888571_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888572_{Pair}.fastq.gz"
+#
+#ANN1152:
+# ANN1152:
+#   ANN1152:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888516_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888742_{Pair}.fastq.gz"
+#
+#ANN1154:
+# ANN1154:
+#   ANN1154:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888485_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888486_{Pair}.fastq.gz"
+#
+#ANN1162:
+# ANN1162:
+#   ANN1162:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888796_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888795_{Pair}.fastq.gz"
+#
+#ANN1169:
+# ANN1169:
+#   ANN1169:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888757_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888790_{Pair}.fastq.gz"
+#
+#ANN1172:
+# ANN1172:
+#   ANN1172:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8889026_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8889027_{Pair}.fastq.gz"
+#
+#ANN1174:
+# ANN1174:
+#   ANN1174:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888862_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888863_{Pair}.fastq.gz"
+#
+#ANN1183:
+# ANN1183:
+#   ANN1183:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888549_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888727_{Pair}.fastq.gz"
+#
+#ANN1195:
+# ANN1195:
+#   ANN1195:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888702_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888704_{Pair}.fastq.gz"
+#
+#ANN1197:
+# ANN1197:
+#   ANN1197:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888886_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888887_{Pair}.fastq.gz"
+#
+#ANN1198:
+# ANN1198:
+#   ANN1198:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888889_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8888888_{Pair}.fastq.gz"
+#
+#ANN1202:
+# ANN1202:
+#   ANN1202:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892411_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892412_{Pair}.fastq.gz"
+#
+#ANN1203:
+# ANN1203:
+#   ANN1203:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892414_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892328_{Pair}.fastq.gz"
+#
+#ANN1204:
+# ANN1204:
+#   ANN1204:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892283_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892723_{Pair}.fastq.gz"
+#
+#ANN1218:
+# ANN1218:
+#   ANN1218:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892472_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892475_{Pair}.fastq.gz"
+#
+#ANN1260:
+# ANN1260:
+#   ANN1260:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892683_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892716_{Pair}.fastq.gz"
+#
+#ANN1296:
+# ANN1296:
+#   ANN1296:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892572_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892573_{Pair}.fastq.gz"
+#
+#ANN1301:
+# ANN1301:
+#   ANN1301:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892452_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892453_{Pair}.fastq.gz"
+#
+#ANN1309:
+# ANN1309:
+#   ANN1309:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892758_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892791_{Pair}.fastq.gz"
+#
+#ANN1310:
+# ANN1310:
+#   ANN1310:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892794_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892795_{Pair}.fastq.gz"
+#
+#ANN1311:
+# ANN1311:
+#   ANN1311:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892634_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892633_{Pair}.fastq.gz"
+#
+#ANN1328:
+# ANN1328:
+#   ANN1328:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892457_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892458_{Pair}.fastq.gz"
+#
+ANN1330:
+ ANN1330:
+   ANN1330:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892421_{Pair}.fastq.gz"
+     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR8892422_{Pair}.fastq.gz"
+
+IA1W_1:
+ IA1W_1:
+   IA1W_1:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940240_{Pair}.fastq.gz"
+     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940268_{Pair}.fastq.gz"
+
+IA1W_11R:
+ IA1W_11R:
+   IA1W_11R:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940350_{Pair}.fastq.gz"
+     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940451_{Pair}.fastq.gz"
+
+IA1W_2:
+ IA1W_2:
+   IA1W_2:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940333_{Pair}.fastq.gz"
+     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940507_{Pair}.fastq.gz"
+
+IA1W_5:
+ IA1W_5:
+   IA1W_5:
+     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940222_{Pair}.fastq.gz"
+     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940346_{Pair}.fastq.gz"
+#
+#IA2W_7:
+# IA2W_7:
+#   IA2W_7:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940329_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940504_{Pair}.fastq.gz"
+#
+#KS1W_2:
+# KS1W_2:
+#   KS1W_2:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940297_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940577_{Pair}.fastq.gz"
+#
+#KS1W_32:
+# KS1W_32:
+#   KS1W_32:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940553_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940182_{Pair}.fastq.gz"
+#
+#KS1W_35:
+# KS1W_35:
+#   KS1W_35:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940273_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940340_{Pair}.fastq.gz"
+#
+#KS2W_15:
+# KS2W_15:
+#   KS2W_15:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940267_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940505_{Pair}.fastq.gz"
+#
+#KS2W_32:
+# KS2W_32:
+#   KS2W_32:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940259_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940535_{Pair}.fastq.gz"
+#
+#KS2W_35:
+# KS2W_35:
+#   KS2W_35:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940335_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940557_{Pair}.fastq.gz"
+#
+#MB1W_39:
+# MB1W_39:
+#   MB1W_39:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940281_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940326_{Pair}.fastq.gz"
+#
+#MB1W_40:
+# MB1W_40:
+#   MB1W_40:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940252_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940537_{Pair}.fastq.gz"
+#
+#MO1W_38:
+# MO1W_38:
+#   MO1W_38:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940113_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940190_{Pair}.fastq.gz"
+#
+#ND1W_38:
+# ND1W_38:
+#   ND1W_38:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940256_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940539_{Pair}.fastq.gz"
+#
+#SD1W_13:
+# SD1W_13:
+#   SD1W_13:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940328_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940556_{Pair}.fastq.gz"
+#
+#SD2W_23:
+# SD2W_23:
+#   SD2W_23:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940269_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940338_{Pair}.fastq.gz"
+#
+#SD2W_27:
+# SD2W_27:
+#   SD2W_27:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940352_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940447_{Pair}.fastq.gz"
+#
+#SK1W_22R:
+# SK1W_22R:
+#   SK1W_22R:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940558_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940194_{Pair}.fastq.gz"
+#
+#SK1W_29R:
+# SK1W_29R:
+#   SK1W_29R:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940444_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940135_{Pair}.fastq.gz"
+#
+#SK1W_Q:
+# SK1W_Q:
+#   SK1W_Q:
+#     Lane1: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940200_{Pair}.fastq.gz"
+#     Lane2: "/global/scratch/users/peter_stokes/paleomix_alignments/fastq_pool/SRR5940230_{Pair}.fastq.gz"
+#
+#

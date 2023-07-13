@@ -1,0 +1,533 @@
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr01.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr02.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr03.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr04.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr05.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr06.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr07.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr08.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr09.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr10.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr11.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr12.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr13.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr14.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr15.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr16.sh
+cp 7_LRE_vcf2smc_Chr01.sh ./7_LRE_vcf2smc_Chr17.sh
+
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr01.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr02.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr03.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr04.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr05.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr06.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr07.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr08.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr09.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr10.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr11.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr12.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr13.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr14.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr15.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr16.sh
+cp 8_LRE_vcf2smc_Chr01.sh ./8_LRE_vcf2smc_Chr17.sh
+
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr01.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr02.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr03.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr04.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr05.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr06.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr07.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr08.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr09.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr10.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr11.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr12.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr13.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr14.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr15.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr16.sh
+cp 9_LRE_vcf2smc_Chr01.sh ./9_LRE_vcf2smc_Chr17.sh
+
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr01.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr02.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr03.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr04.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr05.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr06.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr07.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr08.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr09.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr10.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr11.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr12.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr13.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr14.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr15.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr16.sh
+cp 10_LRE_vcf2smc_Chr01.sh ./10_LRE_vcf2smc_Chr17.sh
+
+gsed -i 's/Chr01/Chr02/g' 7_LRE_vcf2smc_Chr02.sh
+gsed -i 's/Chr01/Chr03/g' 7_LRE_vcf2smc_Chr03.sh
+gsed -i 's/Chr01/Chr04/g' 7_LRE_vcf2smc_Chr04.sh
+gsed -i 's/Chr01/Chr05/g' 7_LRE_vcf2smc_Chr05.sh
+gsed -i 's/Chr01/Chr06/g' 7_LRE_vcf2smc_Chr06.sh
+gsed -i 's/Chr01/Chr07/g' 7_LRE_vcf2smc_Chr07.sh
+gsed -i 's/Chr01/Chr08/g' 7_LRE_vcf2smc_Chr08.sh
+gsed -i 's/Chr01/Chr09/g' 7_LRE_vcf2smc_Chr09.sh
+gsed -i 's/Chr01/Chr10/g' 7_LRE_vcf2smc_Chr10.sh
+gsed -i 's/Chr01/Chr11/g' 7_LRE_vcf2smc_Chr11.sh
+gsed -i 's/Chr01/Chr12/g' 7_LRE_vcf2smc_Chr12.sh
+gsed -i 's/Chr01/Chr13/g' 7_LRE_vcf2smc_Chr13.sh
+gsed -i 's/Chr01/Chr14/g' 7_LRE_vcf2smc_Chr14.sh
+gsed -i 's/Chr01/Chr15/g' 7_LRE_vcf2smc_Chr15.sh
+gsed -i 's/Chr01/Chr16/g' 7_LRE_vcf2smc_Chr16.sh
+gsed -i 's/Chr01/Chr17/g' 7_LRE_vcf2smc_Chr17.sh
+
+gsed -i 's/Chr01/Chr02/g' 8_LRE_vcf2smc_Chr02.sh
+gsed -i 's/Chr01/Chr03/g' 8_LRE_vcf2smc_Chr03.sh
+gsed -i 's/Chr01/Chr04/g' 8_LRE_vcf2smc_Chr04.sh
+gsed -i 's/Chr01/Chr05/g' 8_LRE_vcf2smc_Chr05.sh
+gsed -i 's/Chr01/Chr06/g' 8_LRE_vcf2smc_Chr06.sh
+gsed -i 's/Chr01/Chr07/g' 8_LRE_vcf2smc_Chr07.sh
+gsed -i 's/Chr01/Chr08/g' 8_LRE_vcf2smc_Chr08.sh
+gsed -i 's/Chr01/Chr09/g' 8_LRE_vcf2smc_Chr09.sh
+gsed -i 's/Chr01/Chr10/g' 8_LRE_vcf2smc_Chr10.sh
+gsed -i 's/Chr01/Chr11/g' 8_LRE_vcf2smc_Chr11.sh
+gsed -i 's/Chr01/Chr12/g' 8_LRE_vcf2smc_Chr12.sh
+gsed -i 's/Chr01/Chr13/g' 8_LRE_vcf2smc_Chr13.sh
+gsed -i 's/Chr01/Chr14/g' 8_LRE_vcf2smc_Chr14.sh
+gsed -i 's/Chr01/Chr15/g' 8_LRE_vcf2smc_Chr15.sh
+gsed -i 's/Chr01/Chr16/g' 8_LRE_vcf2smc_Chr16.sh
+gsed -i 's/Chr01/Chr17/g' 8_LRE_vcf2smc_Chr17.sh
+
+gsed -i 's/Chr01/Chr02/g' 9_LRE_vcf2smc_Chr02.sh
+gsed -i 's/Chr01/Chr03/g' 9_LRE_vcf2smc_Chr03.sh
+gsed -i 's/Chr01/Chr04/g' 9_LRE_vcf2smc_Chr04.sh
+gsed -i 's/Chr01/Chr05/g' 9_LRE_vcf2smc_Chr05.sh
+gsed -i 's/Chr01/Chr06/g' 9_LRE_vcf2smc_Chr06.sh
+gsed -i 's/Chr01/Chr07/g' 9_LRE_vcf2smc_Chr07.sh
+gsed -i 's/Chr01/Chr08/g' 9_LRE_vcf2smc_Chr08.sh
+gsed -i 's/Chr01/Chr09/g' 9_LRE_vcf2smc_Chr09.sh
+gsed -i 's/Chr01/Chr10/g' 9_LRE_vcf2smc_Chr10.sh
+gsed -i 's/Chr01/Chr11/g' 9_LRE_vcf2smc_Chr11.sh
+gsed -i 's/Chr01/Chr12/g' 9_LRE_vcf2smc_Chr12.sh
+gsed -i 's/Chr01/Chr13/g' 9_LRE_vcf2smc_Chr13.sh
+gsed -i 's/Chr01/Chr14/g' 9_LRE_vcf2smc_Chr14.sh
+gsed -i 's/Chr01/Chr15/g' 9_LRE_vcf2smc_Chr15.sh
+gsed -i 's/Chr01/Chr16/g' 9_LRE_vcf2smc_Chr16.sh
+gsed -i 's/Chr01/Chr17/g' 9_LRE_vcf2smc_Chr17.sh
+
+gsed -i 's/Chr01/Chr02/g' 10_LRE_vcf2smc_Chr02.sh
+gsed -i 's/Chr01/Chr03/g' 10_LRE_vcf2smc_Chr03.sh
+gsed -i 's/Chr01/Chr04/g' 10_LRE_vcf2smc_Chr04.sh
+gsed -i 's/Chr01/Chr05/g' 10_LRE_vcf2smc_Chr05.sh
+gsed -i 's/Chr01/Chr06/g' 10_LRE_vcf2smc_Chr06.sh
+gsed -i 's/Chr01/Chr07/g' 10_LRE_vcf2smc_Chr07.sh
+gsed -i 's/Chr01/Chr08/g' 10_LRE_vcf2smc_Chr08.sh
+gsed -i 's/Chr01/Chr09/g' 10_LRE_vcf2smc_Chr09.sh
+gsed -i 's/Chr01/Chr10/g' 10_LRE_vcf2smc_Chr10.sh
+gsed -i 's/Chr01/Chr11/g' 10_LRE_vcf2smc_Chr11.sh
+gsed -i 's/Chr01/Chr12/g' 10_LRE_vcf2smc_Chr12.sh
+gsed -i 's/Chr01/Chr13/g' 10_LRE_vcf2smc_Chr13.sh
+gsed -i 's/Chr01/Chr14/g' 10_LRE_vcf2smc_Chr14.sh
+gsed -i 's/Chr01/Chr15/g' 10_LRE_vcf2smc_Chr15.sh
+gsed -i 's/Chr01/Chr16/g' 10_LRE_vcf2smc_Chr16.sh
+gsed -i 's/Chr01/Chr17/g' 10_LRE_vcf2smc_Chr17.sh
+
+sbatch 7_LRE_vcf2smc_Chr01.sh
+sbatch 7_LRE_vcf2smc_Chr02.sh
+sbatch 7_LRE_vcf2smc_Chr03.sh
+sbatch 7_LRE_vcf2smc_Chr04.sh
+sbatch 7_LRE_vcf2smc_Chr05.sh
+sbatch 7_LRE_vcf2smc_Chr06.sh
+sbatch 7_LRE_vcf2smc_Chr07.sh
+sbatch 7_LRE_vcf2smc_Chr08.sh
+sbatch 7_LRE_vcf2smc_Chr09.sh
+sbatch 7_LRE_vcf2smc_Chr10.sh
+sbatch 7_LRE_vcf2smc_Chr11.sh
+sbatch 7_LRE_vcf2smc_Chr12.sh
+sbatch 7_LRE_vcf2smc_Chr13.sh
+sbatch 7_LRE_vcf2smc_Chr14.sh
+sbatch 7_LRE_vcf2smc_Chr15.sh
+sbatch 7_LRE_vcf2smc_Chr16.sh
+sbatch 7_LRE_vcf2smc_Chr17.sh
+sbatch 8_LRE_vcf2smc_Chr01.sh
+
+sbatch 8_LRE_vcf2smc_Chr02.sh
+sbatch 8_LRE_vcf2smc_Chr03.sh
+sbatch 8_LRE_vcf2smc_Chr04.sh
+sbatch 8_LRE_vcf2smc_Chr05.sh
+sbatch 8_LRE_vcf2smc_Chr06.sh
+sbatch 8_LRE_vcf2smc_Chr07.sh
+sbatch 8_LRE_vcf2smc_Chr08.sh
+sbatch 8_LRE_vcf2smc_Chr09.sh
+sbatch 8_LRE_vcf2smc_Chr10.sh
+sbatch 8_LRE_vcf2smc_Chr11.sh
+sbatch 8_LRE_vcf2smc_Chr12.sh
+sbatch 8_LRE_vcf2smc_Chr13.sh
+sbatch 8_LRE_vcf2smc_Chr14.sh
+sbatch 8_LRE_vcf2smc_Chr15.sh
+
+sbatch 8_LRE_vcf2smc_Chr16.sh
+sbatch 8_LRE_vcf2smc_Chr17.sh
+sbatch 9_LRE_vcf2smc_Chr01.sh
+sbatch 9_LRE_vcf2smc_Chr02.sh
+sbatch 9_LRE_vcf2smc_Chr03.sh
+sbatch 9_LRE_vcf2smc_Chr04.sh
+sbatch 9_LRE_vcf2smc_Chr05.sh
+sbatch 9_LRE_vcf2smc_Chr06.sh
+sbatch 9_LRE_vcf2smc_Chr07.sh
+sbatch 9_LRE_vcf2smc_Chr08.sh
+sbatch 9_LRE_vcf2smc_Chr09.sh
+sbatch 9_LRE_vcf2smc_Chr10.sh
+sbatch 9_LRE_vcf2smc_Chr11.sh
+sbatch 9_LRE_vcf2smc_Chr12.sh
+sbatch 9_LRE_vcf2smc_Chr13.sh
+sbatch 9_LRE_vcf2smc_Chr14.sh
+sbatch 9_LRE_vcf2smc_Chr15.sh
+sbatch 9_LRE_vcf2smc_Chr16.sh
+sbatch 9_LRE_vcf2smc_Chr17.sh
+
+sbatch 10_LRE_vcf2smc_Chr01.sh
+sbatch 10_LRE_vcf2smc_Chr02.sh
+sbatch 10_LRE_vcf2smc_Chr03.sh
+sbatch 10_LRE_vcf2smc_Chr04.sh
+sbatch 10_LRE_vcf2smc_Chr05.sh
+sbatch 10_LRE_vcf2smc_Chr06.sh
+sbatch 10_LRE_vcf2smc_Chr07.sh
+sbatch 10_LRE_vcf2smc_Chr08.sh
+sbatch 10_LRE_vcf2smc_Chr09.sh
+sbatch 10_LRE_vcf2smc_Chr10.sh
+sbatch 10_LRE_vcf2smc_Chr11.sh
+sbatch 10_LRE_vcf2smc_Chr12.sh
+sbatch 10_LRE_vcf2smc_Chr13.sh
+sbatch 10_LRE_vcf2smc_Chr14.sh
+sbatch 10_LRE_vcf2smc_Chr15.sh
+sbatch 10_LRE_vcf2smc_Chr16.sh
+sbatch 10_LRE_vcf2smc_Chr17.sh
+
+
+
+
+
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr01.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr02.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr03.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr04.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr05.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr06.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr07.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr08.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr09.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr10.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr11.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr12.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr13.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr14.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr15.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr16.sh
+cp 1_ENA_vcf2smc_Chr01.sh ./1_ENA_vcf2smc_Chr17.sh
+
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr01.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr02.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr03.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr04.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr05.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr06.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr07.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr08.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr09.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr10.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr11.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr12.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr13.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr14.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr15.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr16.sh
+cp 2_ENA_vcf2smc_Chr01.sh ./2_ENA_vcf2smc_Chr17.sh
+
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr01.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr02.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr03.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr04.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr05.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr06.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr07.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr08.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr09.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr10.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr11.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr12.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr13.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr14.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr15.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr16.sh
+cp 3_ENA_vcf2smc_Chr01.sh ./3_ENA_vcf2smc_Chr17.sh
+
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr01.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr02.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr03.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr04.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr05.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr06.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr07.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr08.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr09.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr10.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr11.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr12.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr13.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr14.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr15.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr16.sh
+cp 4_ENA_vcf2smc_Chr01.sh ./4_ENA_vcf2smc_Chr17.sh
+
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr01.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr02.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr03.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr04.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr05.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr06.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr07.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr08.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr09.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr10.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr11.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr12.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr13.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr14.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr15.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr16.sh
+cp 5_ENA_vcf2smc_Chr01.sh ./5_ENA_vcf2smc_Chr17.sh
+
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr01.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr02.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr03.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr04.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr05.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr06.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr07.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr08.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr09.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr10.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr11.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr12.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr13.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr14.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr15.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr16.sh
+cp 6_ENA_vcf2smc_Chr01.sh ./6_ENA_vcf2smc_Chr17.sh
+
+
+
+gsed -i 's/Chr01/Chr02/g' 1_ENA_vcf2smc_Chr02.sh
+gsed -i 's/Chr01/Chr03/g' 1_ENA_vcf2smc_Chr03.sh
+gsed -i 's/Chr01/Chr04/g' 1_ENA_vcf2smc_Chr04.sh
+gsed -i 's/Chr01/Chr05/g' 1_ENA_vcf2smc_Chr05.sh
+gsed -i 's/Chr01/Chr06/g' 1_ENA_vcf2smc_Chr06.sh
+gsed -i 's/Chr01/Chr07/g' 1_ENA_vcf2smc_Chr07.sh
+gsed -i 's/Chr01/Chr08/g' 1_ENA_vcf2smc_Chr08.sh
+gsed -i 's/Chr01/Chr09/g' 1_ENA_vcf2smc_Chr09.sh
+gsed -i 's/Chr01/Chr10/g' 1_ENA_vcf2smc_Chr10.sh
+gsed -i 's/Chr01/Chr11/g' 1_ENA_vcf2smc_Chr11.sh
+gsed -i 's/Chr01/Chr12/g' 1_ENA_vcf2smc_Chr12.sh
+gsed -i 's/Chr01/Chr13/g' 1_ENA_vcf2smc_Chr13.sh
+gsed -i 's/Chr01/Chr14/g' 1_ENA_vcf2smc_Chr14.sh
+gsed -i 's/Chr01/Chr15/g' 1_ENA_vcf2smc_Chr15.sh
+gsed -i 's/Chr01/Chr16/g' 1_ENA_vcf2smc_Chr16.sh
+gsed -i 's/Chr01/Chr17/g' 1_ENA_vcf2smc_Chr17.sh
+
+gsed -i 's/Chr01/Chr02/g' 2_ENA_vcf2smc_Chr02.sh
+gsed -i 's/Chr01/Chr03/g' 2_ENA_vcf2smc_Chr03.sh
+gsed -i 's/Chr01/Chr04/g' 2_ENA_vcf2smc_Chr04.sh
+gsed -i 's/Chr01/Chr05/g' 2_ENA_vcf2smc_Chr05.sh
+gsed -i 's/Chr01/Chr06/g' 2_ENA_vcf2smc_Chr06.sh
+gsed -i 's/Chr01/Chr07/g' 2_ENA_vcf2smc_Chr07.sh
+gsed -i 's/Chr01/Chr08/g' 2_ENA_vcf2smc_Chr08.sh
+gsed -i 's/Chr01/Chr09/g' 2_ENA_vcf2smc_Chr09.sh
+gsed -i 's/Chr01/Chr10/g' 2_ENA_vcf2smc_Chr10.sh
+gsed -i 's/Chr01/Chr11/g' 2_ENA_vcf2smc_Chr11.sh
+gsed -i 's/Chr01/Chr12/g' 2_ENA_vcf2smc_Chr12.sh
+gsed -i 's/Chr01/Chr13/g' 2_ENA_vcf2smc_Chr13.sh
+gsed -i 's/Chr01/Chr14/g' 2_ENA_vcf2smc_Chr14.sh
+gsed -i 's/Chr01/Chr15/g' 2_ENA_vcf2smc_Chr15.sh
+gsed -i 's/Chr01/Chr16/g' 2_ENA_vcf2smc_Chr16.sh
+gsed -i 's/Chr01/Chr17/g' 2_ENA_vcf2smc_Chr17.sh
+
+gsed -i 's/Chr01/Chr02/g' 3_ENA_vcf2smc_Chr02.sh
+gsed -i 's/Chr01/Chr03/g' 3_ENA_vcf2smc_Chr03.sh
+gsed -i 's/Chr01/Chr04/g' 3_ENA_vcf2smc_Chr04.sh
+gsed -i 's/Chr01/Chr05/g' 3_ENA_vcf2smc_Chr05.sh
+gsed -i 's/Chr01/Chr06/g' 3_ENA_vcf2smc_Chr06.sh
+gsed -i 's/Chr01/Chr07/g' 3_ENA_vcf2smc_Chr07.sh
+gsed -i 's/Chr01/Chr08/g' 3_ENA_vcf2smc_Chr08.sh
+gsed -i 's/Chr01/Chr09/g' 3_ENA_vcf2smc_Chr09.sh
+gsed -i 's/Chr01/Chr10/g' 3_ENA_vcf2smc_Chr10.sh
+gsed -i 's/Chr01/Chr11/g' 3_ENA_vcf2smc_Chr11.sh
+gsed -i 's/Chr01/Chr12/g' 3_ENA_vcf2smc_Chr12.sh
+gsed -i 's/Chr01/Chr13/g' 3_ENA_vcf2smc_Chr13.sh
+gsed -i 's/Chr01/Chr14/g' 3_ENA_vcf2smc_Chr14.sh
+gsed -i 's/Chr01/Chr15/g' 3_ENA_vcf2smc_Chr15.sh
+gsed -i 's/Chr01/Chr16/g' 3_ENA_vcf2smc_Chr16.sh
+gsed -i 's/Chr01/Chr17/g' 3_ENA_vcf2smc_Chr17.sh
+
+gsed -i 's/Chr01/Chr02/g' 4_ENA_vcf2smc_Chr02.sh
+gsed -i 's/Chr01/Chr03/g' 4_ENA_vcf2smc_Chr03.sh
+gsed -i 's/Chr01/Chr04/g' 4_ENA_vcf2smc_Chr04.sh
+gsed -i 's/Chr01/Chr05/g' 4_ENA_vcf2smc_Chr05.sh
+gsed -i 's/Chr01/Chr06/g' 4_ENA_vcf2smc_Chr06.sh
+gsed -i 's/Chr01/Chr07/g' 4_ENA_vcf2smc_Chr07.sh
+gsed -i 's/Chr01/Chr08/g' 4_ENA_vcf2smc_Chr08.sh
+gsed -i 's/Chr01/Chr09/g' 4_ENA_vcf2smc_Chr09.sh
+gsed -i 's/Chr01/Chr10/g' 4_ENA_vcf2smc_Chr10.sh
+gsed -i 's/Chr01/Chr11/g' 4_ENA_vcf2smc_Chr11.sh
+gsed -i 's/Chr01/Chr12/g' 4_ENA_vcf2smc_Chr12.sh
+gsed -i 's/Chr01/Chr13/g' 4_ENA_vcf2smc_Chr13.sh
+gsed -i 's/Chr01/Chr14/g' 4_ENA_vcf2smc_Chr14.sh
+gsed -i 's/Chr01/Chr15/g' 4_ENA_vcf2smc_Chr15.sh
+gsed -i 's/Chr01/Chr16/g' 4_ENA_vcf2smc_Chr16.sh
+gsed -i 's/Chr01/Chr17/g' 4_ENA_vcf2smc_Chr17.sh
+
+gsed -i 's/Chr01/Chr02/g' 5_ENA_vcf2smc_Chr02.sh
+gsed -i 's/Chr01/Chr03/g' 5_ENA_vcf2smc_Chr03.sh
+gsed -i 's/Chr01/Chr04/g' 5_ENA_vcf2smc_Chr04.sh
+gsed -i 's/Chr01/Chr05/g' 5_ENA_vcf2smc_Chr05.sh
+gsed -i 's/Chr01/Chr06/g' 5_ENA_vcf2smc_Chr06.sh
+gsed -i 's/Chr01/Chr07/g' 5_ENA_vcf2smc_Chr07.sh
+gsed -i 's/Chr01/Chr08/g' 5_ENA_vcf2smc_Chr08.sh
+gsed -i 's/Chr01/Chr09/g' 5_ENA_vcf2smc_Chr09.sh
+gsed -i 's/Chr01/Chr10/g' 5_ENA_vcf2smc_Chr10.sh
+gsed -i 's/Chr01/Chr11/g' 5_ENA_vcf2smc_Chr11.sh
+gsed -i 's/Chr01/Chr12/g' 5_ENA_vcf2smc_Chr12.sh
+gsed -i 's/Chr01/Chr13/g' 5_ENA_vcf2smc_Chr13.sh
+gsed -i 's/Chr01/Chr14/g' 5_ENA_vcf2smc_Chr14.sh
+gsed -i 's/Chr01/Chr15/g' 5_ENA_vcf2smc_Chr15.sh
+gsed -i 's/Chr01/Chr16/g' 5_ENA_vcf2smc_Chr16.sh
+gsed -i 's/Chr01/Chr17/g' 5_ENA_vcf2smc_Chr17.sh
+
+gsed -i 's/Chr01/Chr02/g' 6_ENA_vcf2smc_Chr02.sh
+gsed -i 's/Chr01/Chr03/g' 6_ENA_vcf2smc_Chr03.sh
+gsed -i 's/Chr01/Chr04/g' 6_ENA_vcf2smc_Chr04.sh
+gsed -i 's/Chr01/Chr05/g' 6_ENA_vcf2smc_Chr05.sh
+gsed -i 's/Chr01/Chr06/g' 6_ENA_vcf2smc_Chr06.sh
+gsed -i 's/Chr01/Chr07/g' 6_ENA_vcf2smc_Chr07.sh
+gsed -i 's/Chr01/Chr08/g' 6_ENA_vcf2smc_Chr08.sh
+gsed -i 's/Chr01/Chr09/g' 6_ENA_vcf2smc_Chr09.sh
+gsed -i 's/Chr01/Chr10/g' 6_ENA_vcf2smc_Chr10.sh
+gsed -i 's/Chr01/Chr11/g' 6_ENA_vcf2smc_Chr11.sh
+gsed -i 's/Chr01/Chr12/g' 6_ENA_vcf2smc_Chr12.sh
+gsed -i 's/Chr01/Chr13/g' 6_ENA_vcf2smc_Chr13.sh
+gsed -i 's/Chr01/Chr14/g' 6_ENA_vcf2smc_Chr14.sh
+gsed -i 's/Chr01/Chr15/g' 6_ENA_vcf2smc_Chr15.sh
+gsed -i 's/Chr01/Chr16/g' 6_ENA_vcf2smc_Chr16.sh
+gsed -i 's/Chr01/Chr17/g' 6_ENA_vcf2smc_Chr17.sh
+
+sbatch 1_ENA_vcf2smc_Chr01.sh
+sbatch 1_ENA_vcf2smc_Chr02.sh
+sbatch 1_ENA_vcf2smc_Chr03.sh
+sbatch 1_ENA_vcf2smc_Chr04.sh
+sbatch 1_ENA_vcf2smc_Chr05.sh
+sbatch 1_ENA_vcf2smc_Chr06.sh
+sbatch 1_ENA_vcf2smc_Chr07.sh
+sbatch 1_ENA_vcf2smc_Chr08.sh
+sbatch 1_ENA_vcf2smc_Chr09.sh
+sbatch 1_ENA_vcf2smc_Chr10.sh
+sbatch 1_ENA_vcf2smc_Chr11.sh
+sbatch 1_ENA_vcf2smc_Chr12.sh
+sbatch 1_ENA_vcf2smc_Chr13.sh
+sbatch 1_ENA_vcf2smc_Chr14.sh
+sbatch 1_ENA_vcf2smc_Chr15.sh
+
+sbatch 1_ENA_vcf2smc_Chr16.sh
+sbatch 1_ENA_vcf2smc_Chr17.sh
+sbatch 2_ENA_vcf2smc_Chr01.sh
+sbatch 2_ENA_vcf2smc_Chr02.sh
+sbatch 2_ENA_vcf2smc_Chr03.sh
+sbatch 2_ENA_vcf2smc_Chr04.sh
+sbatch 2_ENA_vcf2smc_Chr05.sh
+sbatch 2_ENA_vcf2smc_Chr06.sh
+sbatch 2_ENA_vcf2smc_Chr07.sh
+sbatch 2_ENA_vcf2smc_Chr08.sh
+sbatch 2_ENA_vcf2smc_Chr09.sh
+sbatch 2_ENA_vcf2smc_Chr10.sh
+sbatch 2_ENA_vcf2smc_Chr11.sh
+sbatch 2_ENA_vcf2smc_Chr12.sh
+sbatch 2_ENA_vcf2smc_Chr13.sh
+sbatch 2_ENA_vcf2smc_Chr14.sh
+sbatch 2_ENA_vcf2smc_Chr15.sh
+sbatch 2_ENA_vcf2smc_Chr16.sh
+sbatch 2_ENA_vcf2smc_Chr17.sh
+sbatch 3_ENA_vcf2smc_Chr01.sh
+sbatch 3_ENA_vcf2smc_Chr02.sh
+sbatch 3_ENA_vcf2smc_Chr03.sh
+sbatch 3_ENA_vcf2smc_Chr04.sh
+sbatch 3_ENA_vcf2smc_Chr05.sh
+sbatch 3_ENA_vcf2smc_Chr06.sh
+sbatch 3_ENA_vcf2smc_Chr07.sh
+sbatch 3_ENA_vcf2smc_Chr08.sh
+
+sbatch 3_ENA_vcf2smc_Chr09.sh
+sbatch 3_ENA_vcf2smc_Chr10.sh
+sbatch 3_ENA_vcf2smc_Chr11.sh
+sbatch 3_ENA_vcf2smc_Chr12.sh
+sbatch 3_ENA_vcf2smc_Chr13.sh
+sbatch 3_ENA_vcf2smc_Chr14.sh
+sbatch 3_ENA_vcf2smc_Chr15.sh
+sbatch 3_ENA_vcf2smc_Chr16.sh
+sbatch 3_ENA_vcf2smc_Chr17.sh
+sbatch 4_ENA_vcf2smc_Chr01.sh
+sbatch 4_ENA_vcf2smc_Chr02.sh
+sbatch 4_ENA_vcf2smc_Chr03.sh
+sbatch 4_ENA_vcf2smc_Chr04.sh
+sbatch 4_ENA_vcf2smc_Chr05.sh
+sbatch 4_ENA_vcf2smc_Chr06.sh
+sbatch 4_ENA_vcf2smc_Chr07.sh
+sbatch 4_ENA_vcf2smc_Chr08.sh
+sbatch 4_ENA_vcf2smc_Chr09.sh
+sbatch 4_ENA_vcf2smc_Chr10.sh
+sbatch 4_ENA_vcf2smc_Chr11.sh
+sbatch 4_ENA_vcf2smc_Chr12.sh
+sbatch 4_ENA_vcf2smc_Chr13.sh
+sbatch 4_ENA_vcf2smc_Chr14.sh
+sbatch 4_ENA_vcf2smc_Chr15.sh
+sbatch 4_ENA_vcf2smc_Chr16.sh
+sbatch 4_ENA_vcf2smc_Chr17.sh
+sbatch 5_ENA_vcf2smc_Chr01.sh
+sbatch 5_ENA_vcf2smc_Chr02.sh
+sbatch 5_ENA_vcf2smc_Chr03.sh
+sbatch 5_ENA_vcf2smc_Chr04.sh
+sbatch 5_ENA_vcf2smc_Chr05.sh
+sbatch 5_ENA_vcf2smc_Chr06.sh
+
+sbatch 5_ENA_vcf2smc_Chr07.sh
+sbatch 5_ENA_vcf2smc_Chr08.sh
+sbatch 5_ENA_vcf2smc_Chr09.sh
+sbatch 5_ENA_vcf2smc_Chr10.sh
+sbatch 5_ENA_vcf2smc_Chr11.sh
+sbatch 5_ENA_vcf2smc_Chr12.sh
+sbatch 5_ENA_vcf2smc_Chr13.sh
+sbatch 5_ENA_vcf2smc_Chr14.sh
+sbatch 5_ENA_vcf2smc_Chr15.sh
+sbatch 5_ENA_vcf2smc_Chr16.sh
+sbatch 5_ENA_vcf2smc_Chr17.sh
+sbatch 6_ENA_vcf2smc_Chr01.sh
+sbatch 6_ENA_vcf2smc_Chr02.sh
+sbatch 6_ENA_vcf2smc_Chr03.sh
+sbatch 6_ENA_vcf2smc_Chr04.sh
+sbatch 6_ENA_vcf2smc_Chr05.sh
+sbatch 6_ENA_vcf2smc_Chr06.sh
+sbatch 6_ENA_vcf2smc_Chr07.sh
+sbatch 6_ENA_vcf2smc_Chr08.sh
+sbatch 6_ENA_vcf2smc_Chr09.sh
+sbatch 6_ENA_vcf2smc_Chr10.sh
+sbatch 6_ENA_vcf2smc_Chr11.sh
+sbatch 6_ENA_vcf2smc_Chr12.sh
+sbatch 6_ENA_vcf2smc_Chr13.sh
+sbatch 6_ENA_vcf2smc_Chr14.sh
+sbatch 6_ENA_vcf2smc_Chr15.sh
+sbatch 6_ENA_vcf2smc_Chr16.sh
+sbatch 6_ENA_vcf2smc_Chr17.sh
